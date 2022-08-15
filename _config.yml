@@ -13,10 +13,10 @@ baseurl: ''
 lang: en
 
 # Additional parameters for datetime localization, optional. › https://github.com/iamkun/dayjs/tree/dev/src/locale
-prefer_datetime_locale:
+prefer_datetime_locale: en
 
 # Change to your timezone › http://www.timezoneconverter.com/cgi-bin/findzone/findzone
-timezone:
+timezone: America/New_York
 
 # jekyll-seo-tag settings › https://github.com/jekyll/jekyll-seo-tag/blob/master/docs/usage.md
 # ↓ --------------------------
@@ -40,7 +40,7 @@ social:
   # Change to your full name.
   # It will be displayed as the default author of the posts and the copyright owner in the Footer
   name: Rodrigo Santiago 
-  email: rsdlt@pm.m.com             # change to your email address
+  email: rsdlt@pm.me             # change to your email address
   links:
     # The first element serves as the copyright owner's link
     - https://twitter.com/_rsdlt # change to your twitter homepage
@@ -82,7 +82,7 @@ theme_mode:   # [light|dark]
 img_cdn:
 
 # the avatar on sidebar, support local or CORS resources
-avatar:
+avatar: /assets/img/rsdlt_bw.jpg
 
 # boolean type, the global switch for ToC in posts.
 toc: true
