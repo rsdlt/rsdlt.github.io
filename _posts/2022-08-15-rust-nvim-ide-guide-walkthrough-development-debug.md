@@ -106,14 +106,10 @@ _Rust development with Neovim and [voldikss/vim-floaterm] float terminal plugin_
 
 To make things more digestible, here the major activities that what we are going to do:
 
-```mermaid
-flowchart TB 
-    rust-analyzer --setup--> rust-tools --setup--> nvim-lsp <-->rust-analyzer
-    nvim-lsp <--setup--> completion
-    tree-sitter-rust --setup--> nvim-treesitter --> highlighting
-    nvim-treesitter --> folding
-    cargo --compile--> binary <--atach--> codelldb <--setup--> vimspector
-```
+
+![Rust and Neovim setup diagram - made with mermaid-hs](mermaid-diagram-2022-08-15-182414.png){: .shadow width="650" height="465" style="max-width: 90%" }
+_Rust and Neovim Set Up Diagram - made with https://mermaid.live_
+ 
 
 <br />
 <br />
