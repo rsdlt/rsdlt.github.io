@@ -9,7 +9,7 @@ Hello, my name is Rodrigo Santiago -`rsdlt`- and here is where I post my persona
 I started programming ~20 years ago in `C` and `C++`, but then focused my career on product management and marketing within the telecommunications and financial technology industries; however, the itch for programming never left me...
 
 If you want to contact me, you can reach me at
-[my GitHub page](https://github.com/rsldt) or [rsldt@pm.me](rsdlt@pm.me).
+[my GitHub page](https://github.com/rsldt) or [rsldt@pm.me](mailto:rsdlt@pm.me).
 
 <br />
 <br />
