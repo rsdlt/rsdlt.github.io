@@ -1,9 +1,9 @@
 ---
-title: Rust Development Environment and Workflow with Neovim
+title: Rust and Neovim - A Thorough Guide and Walkthrough
 author: rsdlt
-date: 2022-08-14 09:35:00 +0800
+date: 2022-08-15 17:45:00 +0800
 categories: [Rust, Neovim]
-tags: [rust, ide, neovim, vim, vimspector, rust-tools, rust-analyzer]
+tags: [rust, ide, neovim, vimspector, rust-tools, rust-analyzer, debugger, lsp, development, environment, walktrhough, guide]
 pin:
 math: true
 mermaid: true
