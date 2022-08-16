@@ -34,9 +34,9 @@ This post is a detailed explanation and walkthrough of how I set up my Rust deve
 
 Like many developers, I went through a phase of looking for the _ideal_ development set of tools that would be convenient and enjoyable, but most of all, that would _boost_ my productivity. 
 
-After extensively trying many text editors and IDEs, I have finally decided and settled on [Neovim].
+After extensively trying many text editors and IDEs, I have decided to give [Neovim] a serious shot and invest time and effort in leraning and customizing it heavily.
 
-I have to say, it was no easy feat...
+I have to say, it was no easy feat... But it is also a great experience!
 
 Neovim is a very sophisticated tool that is _extremely customizable_ but carries a _steep learning curve_. However, once you're past the basics and force yourself some _muscle memory_ it is unbelievably fast. All the effort pays off massively. 
 
