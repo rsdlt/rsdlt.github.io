@@ -30,12 +30,12 @@ panel:
 copyright:
   # Shown at the bottom of the post
   license:
-    template: This post is licensed under :LICENSE_NAME by the author.
+    template: This post is licensed under :LICENSE_NAME by the author. <br />Source code samples licensed under <a href="https://mit-license.org/">MIT<a> or <a href="http://www.apache.org/licenses/LICENSE-2.0">Apache-2.0<a>
     name: CC BY 4.0
     link: https://creativecommons.org/licenses/by/4.0/
 
   # Displayed in the footer
-  brief: Some rights reserved.
+  brief: <br />Use of this site is subject to our <a href="/about/">Terms of Use.<a>
   verbose: >-
     Except where otherwise noted, the blog posts on this site are licensed
     under the Creative Commons Attribution 4.0 International (CC BY 4.0) License by the author.

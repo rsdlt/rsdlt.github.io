@@ -166,6 +166,7 @@ Once Mason is installed, we use it to install and manage rust-analyzer and CodeL
 On Neovim command mode we input `:MasonInstall rust-analyzer codelldb`.
 
 When Manson finishes, we we can check with `:Mason` that we have rust-analyzer and CodeLLDB installed.
+
 ![Installing rust-analyzer and CodeLLDB with Mason](rsdlt-rust-ide-4.png){: .shadow width="890" height="281" style="max-width: 90%" }
 _Mason installing rust-analyzer and CodeLLDB for Neovim_
 

@@ -43,8 +43,8 @@ social:
   email: rsdlt@pm.me             # change to your email address
   links:
     # The first element serves as the copyright owner's link
-    - https://twitter.com/_rsdlt # change to your twitter homepage
     - https://github.com/rsdlt # change to your github homepage
+    - https://twitter.com/_rsdlt # change to your twitter homepage
     # Uncomment below to add more social links
     # - https://www.facebook.com/username
     # - https://www.linkedin.com/in/username
@@ -72,7 +72,7 @@ google_analytics:
 #     light  - Use the light color scheme
 #     dark   - Use the dark color scheme
 #
-theme_mode:   # [light|dark]
+theme_mode: dark   # [light|dark]
 
 # The CDN endpoint for images.
 # Notice that once it is assigned, the CDN url
