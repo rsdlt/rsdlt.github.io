@@ -34,7 +34,7 @@ This post is a detailed explanation and walkthrough of how I set up my Rust deve
 
 Like many developers, I went through a phase of looking for the _ideal_ development set of tools that would be convenient and enjoyable, but most of all, that would _boost_ my productivity. 
 
-After extensively trying many text editors and IDEs, I have decided to give [Neovim] a serious shot and invest time and effort in leraning and customizing it heavily.
+After extensively trying many text editors and IDEs, I have decided to give [Neovim] a serious shot and invest time and effort in learning and customizing it heavily.
 
 I have to say, it was no easy feat... But it is also a great experience!
 
@@ -472,9 +472,9 @@ _Rust code folding in Neovim using Tree-sitter_
 
 
 ### 5. Set up Vimspector and CodeLLDB to debug Rust and Rust Tests 
-Okay, now comes one of the most impotart features of any IDE: having a debugger a couple of clicks away to troubleshoot your code. 
+Okay, now comes one of the most important features of any IDE: having a debugger a couple of clicks away to troubleshoot your code. 
 
-As of today, my prefered method is to use the [Vimspector] plugin with [CodeLLDB].
+As of today, my preferred method is to use the [Vimspector] plugin with [CodeLLDB].
 
 > There is also the alternative to use [nvim-DAP] instead of Vimspector. It looks like a fantastic initiative that is getting traction, but I still have not enabled it in my workflow. Definitely worth a look!
 {: .prompt-tip }
