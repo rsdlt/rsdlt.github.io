@@ -54,37 +54,41 @@ flowchart LR
 <!-- style ma fill:#bb70d2,color:#000,stroke:#000; -->
 <br />
 
-In this **Part 1** the focus is only to create the following:
+In **Part 1** and **Part 2** of this series, the focus is to create the following:
+
+**Part 1:**
 
 - Initial project structure:
   - Cargo.toml
   - Modules tree
   - Unit testing
-- Create the following:
-  - Geometry module:
-    - Vectors
-      - Struct
-      - Traits
-      - Implementations
-    - Points
-      - Struct
-      - Traits
-      - Implementations
-  - Picture module:
-    - Canvas
-      - Struct
-      - Traits
-      - Implementations
-    - Pixel
-      - Struct
-      - Traits
-      - Implementations
-    - Colors
-      - Struct
-      - Traits
-      - Implementations
-    - Image
-      - File
+- Geometry module:
+  - Vectors
+    - Struct
+    - Traits
+    - Implementations
+  - Points
+    - Struct
+    - Traits
+    - Implementations
+
+**Part 2:**
+
+- Picture module:
+  - Canvas
+    - Struct
+    - Traits
+    - Implementations
+  - Pixel
+    - Struct
+    - Traits
+    - Implementations
+  - Colors
+    - Struct
+    - Traits
+    - Implementations
+  - Image
+    - File
 
 The following diagram is a 'zoom-in' from the general architecture displayed above focused on the `Geometry` and `Picture`:
 
@@ -367,7 +371,6 @@ Out of the countless ways to implement the desired functionality for these types
   - Neg
 - Implement the following `common traits`:
   - `Display`, `Debug`, `Default`, `Eq` and `PartialEq`
-- Define an `EPSILON` constant for floating-point comparisons. Rust provides `f64::EPSILON`, however a decimal precision of only 5 digits is enough for this application.
 
 #### Axis enumerator
 
@@ -663,6 +666,8 @@ However, only in the particular cases of `Display` and `Default` a manual implem
 
 Default implementations via `derive`:
 
+`src/geometry/vector.rs`
+
 ```rust
 #[derive(Debug)]
 pub enum Axis<U>
@@ -675,6 +680,8 @@ pub struct Point3<T>
 ```
 
 And now the `manual` implementations:
+
+`src/geometry/vector.rs`
 
 ```rust
 impl Display for Vector3<f64> {
@@ -716,40 +723,259 @@ impl Default for Vector3<f64> {
 }
 ```
 
-Even when `Default` for `Vector3` implements Rust's defaults of filling the value with 0.0's for `f64`, it is convenient to have the manual implementation at hand for testing purposes.
+Even when `Default` for `Vector3` implements Rust's defaults of filling the value with 0.0's for `f64`, it's convenient to have the manual implementation at hand for testing purposes.
 
-#### Epsilon constant
+### Common vector operations
 
+The last important implementations that are needed for the `Vector` type are those regarding their common mathematic operations:
+
+- Calculate magnitude
+- Normalize the vector
+- Calculate dot product
+- Calculate cross product
+- Obtain the minimum component in the vector
+- Obtain the maximum component in the vector
+- Return components of the vector by name and index
+
+These capabilities can be defined using a public trait named `VecOps<T>`, with a generic parameter in order to extend its implementation for types other than `Vector3<f64>`:
+
+`src/geometry/vector.rs`
+
+```rust
+/// A trait that encapsulates common Vector Operations.
+pub trait VecOps<T> {
+    /// Computes the magnitude of a Vector.
+    fn magnitude(&self) -> f64;
+    /// Returns the vector normalized (with magnitude of 1.0)
+    fn normalized(&mut self) -> Self;
+    /// Returns the Dot Product of two Vectors.
+    fn dot(lhs: T, rhs: T) -> f64;
+    /// Returns the Cross Product of two Vectors.
+    fn cross(lhs: T, rhs: T) -> T;
+    /// Returns the Smallest component in the Vector.
+    fn min_component(&self) -> (i8, char, f64);
+    /// Returns the Largest component in the Vector.
+    fn max_component(&self) -> (i8, char, f64);
+    /// Returns the component of the Vector by index. this(1)
+    fn this(&self, index: i8) -> Option<(i8, char, f64)>;
+    /// Returns the component of the Vector by name. this_n('x')
+    fn this_name(&self, index: char) -> Option<(i8, char, f64)>;
+}
+```
+
+As with the `CoordInit` trait, the implementation needs to be defined for each function within an `impl` block for `Vector3<f64>`:
+
+```rust
+impl VecOps<Vector3<f64>> for Vector3<f64> {
+    fn magnitude(&self) -> f64 {
+        (self.x.powf(2.0) + self.y.powf(2.0) + self.z.powf(2.0)).sqrt()
+    }
+
+    fn normalized(&mut self) -> Self {
+        let magnitude = self.magnitude();
+        Self {
+            x: self.x / magnitude,
+            y: self.y / magnitude,
+            z: self.z / magnitude,
+        }
+    }
+
+    // other functions in the VecOps<T> trait
+```
 
 ### Unit tests
 
-## Colors
+Now that the basic implementations and capabilities for `Vector3` and `Point3` are created it's time to perform unit tests to ensure that there are no issues or bugs in the code.
 
+As described at the beginning, the tests for each of the modules are implemented in the `test.rs` under the module's directory. 
 
-### Traits and implementation
+In the case of `Vector3` and `Point3`, the file is located in `src/geometry/vector/tests.rs`.
 
-### Unit tests
+There are 5 tests that will be executed to validate our types:
+1. Vector and Point construction integrity
+2. Vector and Point operator overloading integrity
+3. Vector common operations integrity
+4. Rocket launch simulator, based on [The Ray Tracer Challenge] book[^1]
 
-## Canvas
+First step is to bring into scope the `vector` module and use the `alias` for the `Axis` enumerator:
 
+`src/geometry/vector/tests.rs`
 
-### Traits and implementation
+```rust
+/// Unit testing for Vector3 and Point3 types
+use super::*;
 
-### Unit tests
+use super::Axis::XYZ as xyz;
 
-## First Image 
+```
 
-Finally, all can be incorporated into a unified test that produces the first image:
+Second we define the tests functions:
+```rust
 
-Not exactly as the header photo yet, but this is just the first step…
+#[test]
+// This test validates the construction of the Vector3 and Point3 types
+fn vector_and_point_construction_integrity() {}
+
+#[test]
+// This test validates the operation overloading Add, Sub, Div, Equality, Mul, Neg, AddAssign, SubAssign  for the Vector3 and Point3
+fn vector_and_point_operator_overloading_integrity() {}
+
+#[test]
+// This test validates the implementation of the fuctions in the VecOps trait
+fn vector_common_operations_integrity() {} 
+
+#[test]
+// This test validates integrity by simulating a rocket launch
+fn simulate_rocket_lauch() {}
+```
+
+Each test is basically a set of `assert!()` and `assert_eq!()` macros, as well as `println!()` statements.
+
+The testing file is pretty extensive, so in this post I will only show the code for `vector_common_operations_integrity()` and the 'simulate_rocket_lauch()' tests:
+
+`src/geometry/vector/tests.rs`
+
+```rust
+#[test]
+// This test validates the implementation of the fuctions in the VecOps trait
+fn vector_common_operations_integrity() {
+    // Magnitude
+    let v1 = Vector3::new(xyz(1.0, 2.0, 3.0));
+    assert_eq!(v1.magnitude(), 14f64.sqrt());
+    // Normalization
+    let mut v2 = v1;
+    assert_eq!(v2.normalized().magnitude(), 1f64);
+    // Dot product
+    let a = Vector3::new(xyz(1.0, 2.0, 3.0));
+    let b = Vector3::new(xyz(2.0, 3.0, 4.0));
+    assert_eq!(Vector3::dot(a, b), 20f64);
+    // Cross product
+    assert_eq!(Vector3::cross(a, b), Vector3::new(xyz(-1.0, 2.0, -1.0)));
+    assert_eq!(Vector3::cross(b, a), Vector3::new(xyz(1.0, -2.0, 1.0)));
+    // Min, Max and Get Components
+    assert_eq!(a.min_component(), (0, 'x', 1.0));
+    assert_eq!(a.max_component(), (2, 'z', 3.0));
+    assert_eq!(a.this(0).unwrap(), (0, 'x', 1.0));
+    assert_eq!(a.this(9), None);
+    assert_eq!(b.this(b.min_component().0).unwrap(), (0, 'x', 2.0));
+    assert_eq!(a.this_name('z').unwrap(), (2, 'z', 3.0));
+}
+```
+
+Running the test using `cargo test vector_common_operations_integrity` yields a positive result:
+```terminal
+ λ cargo test vector_common_operations_integrity
+running 1 test
+test geometry::vector::tests::vector_common_operations_integrity ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 8 filtered out; finished in 0.00s
+```
+
+And now, the rocket launch simulation that brings everything together in a single test. To validate, the test will print the coordinates of the rocket based on inial launching conditions and the environment (gravity and wind).
+
+The expectation is to see the data of a parabolic launch:
+- x axis getting larger
+- y axis getting larger and then going down to 0.0
+
+```rust
+#[test]
+// This test validates integrity by simulating a rocket launch
+fn simulate_rocket_lauch() {
+    #[derive(Debug)]
+    struct Projectile {
+        position: Point3<f64>,
+        velocity: Vector3<f64>,
+    }
+
+    struct Environment {
+        gravity: Vector3<f64>,
+        wind: Vector3<f64>,
+    }
+
+    let mut proj = Projectile {
+        position: Point3::up(),
+        velocity: Vector3::new(xyz(1.0, 1.0, 0.0)).normalized(),
+    };
+
+    let env = Environment {
+        gravity: Vector3::down() / 10f64,
+        wind: Vector3::left() / 100f64,
+    };
+
+    fn tick<'a, 'b>(env: &'a Environment, proj: &'b mut Projectile) -> &'b mut Projectile {
+        proj.position = proj.position + proj.velocity;
+        proj.velocity = proj.velocity + env.gravity + env.wind;
+        proj
+    }
+
+    println!(
+        "Launch position: - x: {:^5.2}, y: {:^5.2}, z: {:^5.2}",
+        proj.position.x, proj.position.y, proj.position.z
+    );
+    while proj.position.y > 0.0 {
+        tick(&env, &mut proj);
+        if proj.position.y <= 0.0 {
+            break;
+        }
+        println!(
+            "Projectile position - x: {:^5.2}, y: {:^5.2}, z: {:^5.2}",
+            proj.position.x, proj.position.y, proj.position.z
+        );
+    }
+    println!("========================== End");
+}
+```
+
+To view the `println!()` results it's necessary to run `cargo test` with the `-- --nocapture` argument:
+
+```terminal
+Rust/ruxel on  main [!] > v0.0.0 | v1.63.0
+ λ cargo test simulate_rocket_lauch  -- --nocapture
+
+     Finished test [unoptimized + debuginfo] target(s) in 0.00s
+     Running unittests src/main.rs (target/debug/deps/ruxel-6b30efdff903fb79)
+
+running 1 test
+Launch position: - x: 0.00 , y: 1.00 , z: 0.00
+Projectile position - x: 0.71 , y: 1.71 , z: 0.00
+Projectile position - x: 1.40 , y: 2.31 , z: 0.00
+Projectile position - x: 2.09 , y: 2.82 , z: 0.00
+Projectile position - x: 2.77 , y: 3.23 , z: 0.00
+Projectile position - x: 3.44 , y: 3.54 , z: 0.00
+Projectile position - x: 4.09 , y: 3.74 , z: 0.00
+Projectile position - x: 4.74 , y: 3.85 , z: 0.00
+Projectile position - x: 5.38 , y: 3.86 , z: 0.00
+Projectile position - x: 6.00 , y: 3.76 , z: 0.00
+Projectile position - x: 6.62 , y: 3.57 , z: 0.00
+Projectile position - x: 7.23 , y: 3.28 , z: 0.00
+Projectile position - x: 7.83 , y: 2.89 , z: 0.00
+Projectile position - x: 8.41 , y: 2.39 , z: 0.00
+Projectile position - x: 8.99 , y: 1.80 , z: 0.00
+Projectile position - x: 9.56 , y: 1.11 , z: 0.00
+Projectile position - x: 10.11, y: 0.31 , z: 0.00
+========================== End
+test geometry::vector::tests::simulate_rocket_lauch ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 8 filtered out; finished in 0.00s
+```
+
+As expected, the test passed. This means that our `Vector3` and `Point3` implementations have been successful.
+
+And with that we conclude **Part 1** of this series!
+
+## Next steps
+
+In **Part 2** we will focus on:
+- Creating the `Color`, `Pixel` and `Canvas` types.
+- Defining and implementing their `traits`.
+- Writing and executing their `unit tests`.
+- And finally, producing the first image.
 
 
 
 ***
-**_Links, references and disclaimers:_**   
-
-Header Photo by <a href="https://unsplash.com/@lilrohit?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Rohit Choudhari</a> on <a href="https://unsplash.com/s/photos/3d-render?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
-
+  
+[The Ray Tracer Challenge]:https://pragprog.com/search/?q=the-ray-tracer-challenge
 [Rust API Guidelines]:https://rust-lang.github.io/api-guidelines/about.html
 [GitHub repository]:https://github.com/rsdlt/ruxel
 [ruxel]:https://github.com/rsdlt/ruxel
@@ -762,3 +988,11 @@ Header Photo by <a href="https://unsplash.com/@lilrohit?utm_source=unsplash&utm_
 [Neovim]:https://neovim.io/
 [Fish]:https://fishshell.com/
 [Basic Operator Overloading with Traits]:/posts/welcome-blog-rust-technology-development-programming-language/
+
+**_Links, references and disclaimers:_**
+
+Header Photo by <a href="https://unsplash.com/@lilrohit?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Rohit Choudhari</a> on <a href="https://unsplash.com/s/photos/3d-render?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
+
+Books:
+
+[^1]: Buck, Jamis. (2019). _The ray tracer challenge: A test-driven guide to your first 3D renderer_. The Pragmatic Programmers.
