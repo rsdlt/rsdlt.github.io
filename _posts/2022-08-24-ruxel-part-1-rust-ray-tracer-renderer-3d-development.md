@@ -19,7 +19,7 @@ This post is **Part 1** in a series to share my journey in developing [Ruxel], a
 
 Please see the [Series Prelude] for more information regarding my [Goals] for `v.0.1.0` of this project.
 
-Ideally by the end of the series, `Ruxel` will be able to render an image like the one in the [header], or better…
+Ideally by the end of the series, `Ruxel` will be able to render an image like the one in the header, or better…
 
 >**Note:** Explaining 3D math in depth isn't the aim of these posts. To learn more about the underlying mathematics and theory please check the books I reference in the [Series Prelude].
 
@@ -968,7 +968,6 @@ In **Part 2** we will focus on:
 [Rust]:https://www.rust-lang.org
 [Series Prelude]:https://rsdlt.github.io/posts/ruxel-ray-tracer-project-first-update-rust-programming-development/
 [Goals]:https://rsdlt.github.io/posts/ruxel-ray-tracer-project-first-update-rust-programming-development/#goals-for-ruxel-version-010
-[header]:href="https://unsplash.com/@lilrohit?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText"
 [Alacritty]:https://alacritty.org/
 [Tmux]:https://github.com/tmux/tmux
 [Neovim]:https://neovim.io/
@@ -979,7 +978,7 @@ In **Part 2** we will focus on:
 
 **_Links, references and disclaimers:_**
 
-Header Photo by [Rohit Choudhari](https://unsplash.com/@lilrohit?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText) on [Unsplash](https://unsplash.com/)
+Header Photo by [Rohit Choudhari](https://unsplash.com/@lilrohit) on [Unsplash](https://unsplash.com/)
 
 Books:
 
