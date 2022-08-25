@@ -965,9 +965,8 @@ In **Part 2** we will focus on:
 [The Ray Tracer Challenge]:https://pragprog.com/search/?q=the-ray-tracer-challenge
 [Rust API Guidelines]:https://rust-lang.github.io/api-guidelines/about.html
 [GitHub repository]:https://github.com/rsdlt/ruxel
-[ruxel]:https://github.com/rsdlt/ruxel
-[Rust]:[https://www.rust-lang.org]
-[Series Prelude]:[https://rsdlt.github.io/posts/ruxel-ray-tracer-project-first-update-rust-programming-development/]
+[Rust]:https://www.rust-lang.org
+[Series Prelude]:https://rsdlt.github.io/posts/ruxel-ray-tracer-project-first-update-rust-programming-development/
 [Goals]:https://rsdlt.github.io/posts/ruxel-ray-tracer-project-first-update-rust-programming-development/#goals-for-ruxel-version-010
 [header]:href="https://unsplash.com/@lilrohit?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText"
 [Alacritty]:https://alacritty.org/
@@ -975,6 +974,8 @@ In **Part 2** we will focus on:
 [Neovim]:https://neovim.io/
 [Fish]:https://fishshell.com/
 [Basic Operator Overloading with Traits]:/posts/welcome-blog-rust-technology-development-programming-language/
+[Ruxel]:https://github.com/rsdlt/ruxel
+
 
 **_Links, references and disclaimers:_**
 
