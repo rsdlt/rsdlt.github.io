@@ -1,9 +1,9 @@
 ---
 title: Ruxel - Building a Ray Tracer with Rust Part 1
 author: rsdlt
-date: 2022-08-16 17:45:00 +0800
+date: 2022-08-24 22:20:00 +0800
 categories: [Rust, Ray Tracer]
-tags: [rust, 3D, ray tracer, render, rendering, struct, enum, trait]
+tags: [rust, 3D, ray tracer, render, rendering, struct, enum, trait, neovim]
 pin:
 math: true
 mermaid: true
@@ -31,22 +31,26 @@ The long-term objective is that `Ruxel` will become a big project, and surely it
 
 The following diagram presents a high-level view of the architecture of the application, at least for `v.0.1.0`:
 
-```mermaid
-flowchart LR 
-    idg[geometry:\n vector, matrix...] -..- renderer 
-    idl[lighting:\n shadows, reflection...] -..- renderer
-    idm[materials:\n patterns, textures...] -..- renderer
-    renderer ==> idp[picture:\n *.ppm, *.png...]
-    ids[shapes\n *.obj, native] -..- renderer
-    subgraph renderer
-        direction TB 
-        scc(camera) -..- sc(scene) -..- rt(ray tracer)
-    end
-    style rt fill:#de5d68,color:#000,stroke:#000;
-    style sc fill:#57a5e5,color:#000,stroke:#000;
-    style scc fill:#eeb927,color:#000,stroke:#000;
-```
+![Ruxel - High-level architecture diagram](mermaid-diagram-2022-08-24-220253.png){: .shadow width="627" height="437" style="max-width: 90%" }
+_Ruxel high-level architecture diagram - made with https://mermaid.live_
 
+<!---->
+<!-- ```mermaid -->
+<!-- flowchart LR  -->
+<!--     idg[geometry:\n vector, matrix...] -..- renderer  -->
+<!--     idl[lighting:\n shadows, reflection...] -..- renderer -->
+<!--     idm[materials:\n patterns, textures...] -..- renderer -->
+<!--     renderer ==> idp[picture:\n *.ppm, *.png...] -->
+<!--     ids[shapes\n *.obj, native] -..- renderer -->
+<!--     subgraph renderer -->
+<!--         direction TB  -->
+<!--         scc(camera) -..- sc(scene) -..- rt(ray tracer) -->
+<!--     end -->
+<!--     style rt fill:#de5d68,color:#000,stroke:#000; -->
+<!--     style sc fill:#57a5e5,color:#000,stroke:#000; -->
+<!--     style scc fill:#eeb927,color:#000,stroke:#000; -->
+<!-- ``` -->
+<!---->
 <!-- style ge fill:#de5d68,color:#000,stroke:#000; -->
 <!-- style pi fill:#57a5e5,color:#000,stroke:#000; -->
 <!-- style li fill:#eeb927,color:#000,stroke:#000; -->
@@ -90,24 +94,7 @@ In **Part 1** and **Part 2** of this series, the focus is to create the followin
   - Image
     - File
 
-The following diagram is a 'zoom-in' from the general architecture displayed above focused on the `Geometry` and `Picture`:
-
-```mermaid
-flowchart LR 
-subgraph Geometry
-Vector3
-Point3
-end
-subgraph Picture
-Canvas
-Colors
-end
-subgraph Canvas
-Pixel
-end
-```
-
-Implementing these modules first will allow the testing of the basic geometric primitives and present a first image in a straightforward format.
+Implementing these modules first, will allow the testing of the basic geometric types and present a first image in a straightforward format.
 
 ## Project scaffolding
 
@@ -312,7 +299,7 @@ $$
 
 ### Type definitions
 
-The mathematic definition can be translated into Rust code as follows:
+The mathematics definition can be translated into Rust code as follows:
 `/src/geometry/vector.rs`
 
 ```rust
@@ -555,7 +542,7 @@ To implement operator overloading capabilities it's necessary to bring the `std:
 use std::ops::{Add, AddAssign, Div, Mul, Neg, Sub, SubAssign}
 ```
 
-Binary operations between Vectors and Points need to follow some mathematic logic, summarized in this table:
+Binary operations between Vectors and Points need to follow some mathematical logic, summarized in this table:
 
 | **Operation** | **LHS** | **RHS** | **Result** |
 |:-------------:|:-------:|:-------:|:----------:|
@@ -727,7 +714,7 @@ Even when `Default` for `Vector3` implements Rust's defaults of filling the valu
 
 ### Common vector operations
 
-The last important implementations that are needed for the `Vector` type are those regarding their common mathematic operations:
+The last important implementations that are needed for the `Vector` type are those regarding their common mathematical operations:
 
 - Calculate magnitude
 - Normalize the vector
@@ -871,11 +858,11 @@ test geometry::vector::tests::vector_common_operations_integrity ... ok
 test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 8 filtered out; finished in 0.00s
 ```
 
-And now, the rocket launch simulation that brings everything together in a single test. To validate, the test will print the coordinates of the rocket based on inial launching conditions and the environment (gravity and wind).
+And now, the rocket launch simulation that brings everything together in a single test. To validate, the test will print the coordinates of the rocket based on initial launching conditions and the environment (gravity and wind).
 
-The expectation is to see the data of a parabolic launch:
-- x axis getting larger
-- y axis getting larger and then going down to 0.0
+The expectation is to see the data of a _parabolic launch_:
+- `x` axis getting larger.
+- `y` axis getting larger and then going down to `0.0`.
 
 ```rust
 #[test]
