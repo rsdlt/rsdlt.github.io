@@ -15,6 +15,9 @@ image:
   alt: Photo by Faris Mohammed via Unsplash 
 ---
 
+> **Edit:** In the original post I said that the *PartialEq* trait bound was required in the generic *Display* function implementation; however, if the last element of the array is the same as its predecessor then the function will not print properly. Thanks to [korrat] for letting me know and for the recommendation to use *std::ptr::eq* instead.  
+{: .prompt-info }
+
 Probably one of the first things that someone does when learning a new programming language is to implement the famous `"Hello, world!"` message, which in the case of [Rust] comes with the boilerplate code via the `cargo new` command:
 
 ```rust
@@ -405,17 +408,22 @@ Then it's necessary to bound the `Array` type to those types that implement the 
 ```rust
 impl<T, const N: usize> Display for Wrap<T, N>
 where
-    T: PartialEq + Display,
+    T: Display,
 ```
 
-In this particular case, the bound with the `PartialEq` trait is required because I'm making an equality comparison between elements of the array.
+In this particular case, <span style="text-decoration: line-through;">the bound with the `PartialEq` trait is required because I'm making an equality comparison between elements of the array.</span> (As pointed by [korrat], it's better to use `std::ptr::eq` as the comparison function between the references in order to avoid the incorrect printing if the last element of the array is the same as its predecessor.) 
 
 Last thing to do is to implement the required `Display` trait function: `fn fmt(...) -> std::fmt::Result`, with the desired custom formatter:
 
 ```rust
+use core::fmt::Display;
+use std::ptr::eq;
+
+struct Wrap<T, const N: usize>([T; N]);
+
 impl<T, const N: usize> Display for Wrap<T, N>
 where
-    T: PartialEq + Display,
+    T: Display,
 {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         let separator = ", ";
@@ -423,13 +431,21 @@ where
 
         for element in &self.0 {
             s.push_str(&element.to_string());
-            if element != self.0.last().unwrap() {
+            if !eq(element, self.0.last().unwrap()) {
                 s.push_str(&separator);
             }
         }
         write!(f, "{}", s)
     }
 }
+
+fn main() {
+    let my_array = [1, 3, 1];
+
+    let my_wrap = Wrap(my_array);
+    println!("{}", my_wrap);
+}
+
 ```
 
 Finally!
@@ -438,8 +454,8 @@ It's now possible to define an `Array` of any size and of any type, so long as t
 
 ```rust
 fn main() {
-    let my_array_f = [1.5, 2.5, 3.5, 4.5, 5.2, 6.75, 8.90];
-    let my_array_c = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'];
+    let my_array_f = [1.5, 2.5, 3.5, 4.5, 5.2, 6.75, 8.90, 8.90, 8.90];
+    let my_array_c = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'j', 'j'];
     let my_array_s = [
         "Hello".to_string(),
         "World!".to_string(),
@@ -463,8 +479,8 @@ And the result in the terminal is the following:
 
 ```terminal
 λ cargo run -q
-Array -> 1.5, 2.5, 3.5, 4.5, 5.2, 6.75, 8.9
-Array -> a, b, c, d, e, f, g, h, i, j
+Array -> 1.5, 2.5, 3.5, 4.5, 5.2, 6.75, 8.9, 8.9, 8.9
+Array -> a, b, c, d, e, f, g, h, i, j, j, j
 Array -> Hello, World!, from Rust!
 ```
 
@@ -484,3 +500,4 @@ Array -> Hello, World!, from Rust!
 [Haskell Programming Language Newtype]:https://wiki.haskell.org/Newtype
 [Const Generics]:https://rust-lang.github.io/rfcs/2000-const-generics.html
 [Haskell]:https://www.haskell.org/
+[korrat]:https://github.com/korrat/
