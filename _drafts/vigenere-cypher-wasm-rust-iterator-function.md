@@ -111,19 +111,19 @@ _Vigenére cipher general solution diagram_
 
 These great benefit of this stack is that all the logic is coded in Rust, even the front-end HTML logic.
 
-## The web front-end logic
+## The front-end logic and UI elements
 
-What really caught my attention with Sycamore is how simple and straightforward it is to define the web user interface components and elements.
+What really caught my attention with Sycamore is how straightforward it is to define the web user interface components and elements.
 
-Everything is handled through [view!] Rust macro with no closing html tags:
+The UI is handled through a [view!] Rust macro with no closing html tags:
 
 ```rust
 view! { cx,
     h1 { }
+    div(class="my_class")
     h2 { }
     p { }
     div { }
-    div(class="my_class")
     my-own-custom-element { }
     footer { }
 
@@ -131,6 +131,115 @@ view! { cx,
 }
 ```
 
+This simplicity allowed me to create the initial boilerplate application, with placeholders, and project structure in minutes:
+
+`src/main.rs`:
+```rust
+mod cipher;
+use cipher::Hello;
+use sycamore::prelude::*;
+
+#[component]
+fn App<G: Html>(cx: Scope) -> View<G> {
+    let name = create_signal(cx, String::new());
+    let hello_r = cipher::new_hello();
+    let displayed_name = || {
+        if name.get().is_empty() {
+            "".to_string()
+        } else {
+            name.get().as_ref().clone()
+        }
+    };
+
+    view! { cx,
+        div {
+            h2 { "Real-Time Vigénere Cipher" }
+            p { input(placeholder="Enter a phrase", bind:value=name) }
+            p { strong{"Key: "} (displayed_name())}
+            p { strong{"Encrypted: "} (displayed_name())}
+            p { strong{"Decrypted: "} (displayed_name())}
+        }
+    }
+}
+
+fn main() {
+    sycamore::render(|cx| view! { cx, App {} });
+}
+```
+
+`index.html`: (the tiny one)
+```html
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>WebAssembly Vigénere Cipher</title>
+  </head>
+  <body></body>
+</html>
+```
+
+`src/cipher.rs`:
+```rust
+use std::fmt::Display;
+
+pub struct Hello {
+    name: String,
+}
+pub fn new_hello() -> Hello {
+    Hello {
+        name: "Rodrigo".to_string(),
+    }
+}
+impl Display for Hello {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{}", self.name)
+    }
+}
+```
+
+`Cargo.toml`:
+```toml
+[package]
+name = "wasm-vigenere-cipher"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+sycamore = "0.8.1"
+```
+
+With this minimum of scaffolding we can now call Trunk with `trunk serve --open`, let it download, compile and bundle:
+```terminal
+ 
+ λ trunk serve --open
+2022-09-28T01:49:43.120298Z  INFO  starting build
+2022-09-28T01:49:43.123032Z  INFO spawning asset pipelines
+2022-09-28T01:49:50.045688Z  INFO building tmp
+   Compiling proc-macro2 v1.0.44
+   Compiling unicode-ident v1.0.4
+   Compiling quote v1.0.21
+   Compiling syn v1.0.101
+   Compiling wasm-bindgen-shared v0.2.83
+    .
+    .
+    .
+    Finished dev [unoptimized + debuginfo] target(s) in 0.46s
+2022-09-28T01:50:41.373388Z  INFO fetching cargo artifacts
+2022-09-28T01:50:41.441605Z  INFO processing WASM for tmp
+2022-09-28T01:50:41.449095Z  INFO using system installed binary app=wasm-bindgen version=0.2.83
+2022-09-28T01:50:41.449384Z  INFO calling wasm-bindgen for tmp
+2022-09-28T01:50:41.547182Z  INFO copying generated wasm-bindgen artifacts
+2022-09-28T01:50:41.550548Z  INFO applying new distribution
+2022-09-28T01:50:41.551202Z  INFO  success
+```
+
+Trunk spawns a web server and opens the browser window to a fully-reactive application written in Rust:
+
+![boilerplate reactive web app in Rust](first-reactive-web.gif){: width="665" height="253" }
+_Boilerplate Reactive Web App in Rust with Sycamore and Trunk_
 
 ---
 
