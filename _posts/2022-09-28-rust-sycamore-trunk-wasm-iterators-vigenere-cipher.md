@@ -17,6 +17,11 @@ image:
 
 > Check the [demo] and the [GitHub] repo.
 
+
+> **Edit:** Since the original post some readers brought to my attention a bug that yielded incorrect decoding. This is now fixed in release [v0.1.2]. Thanks to [Martin Kavík] and others for letting me know. I also added support to properly display multiple continuous space and new line chars in the decoded text in [v0.1.3]. You can check the details in the [updates below].
+{: .prompt-info }
+
+
 Some days ago I came across Tim McNamara's [Rust Code Challenges], a great course by the way, where the final challenge is to develop a [Vigenère cipher], which according to Wikipedia resisted all attempts to break it for 310 years.
 
 After completing Tim's challenge, I thought that deploying a real-time Vigenére cipher on the Web, and without touching a single line of [JavaScript] code would be a fun project. 
@@ -767,6 +772,78 @@ I definitely look forward to implementing other Rust projects with [Sycamore] + 
 
 Don't forget to check the [demo] and the [GitHub] repository.
 
+## Updates: fixes and new features
+
+### Issues and bugs
+
+There was an issue that in some cases yielded an incorrect decoded text. This was because:
+
+- I left an incorrect number of characters in the `SIZE` constant. The correct number is 192, instead of 225.
+- I had an extra space `' '` in the hard-coded dictionary string.
+
+The supported dictionary of characters is not affected.
+
+The issue was corrected in [v0.1.2]. 
+### New features
+
+In [v0.1.3] I added support for properly displaying continuous space characters and carriage return / new lines  in the decoded text.
+
+To accomplish it, I added a new function named `decode_web` that calls the original `decode` function, then loops through the text and inserts an `&nbsp;` or a `<br>` if it finds a space `' '` or a `'\r'` or `\n` characters, respectively:
+
+`src/cipher.rs`
+```rust
+pub(crate) fn decode_web(
+    enc_msg: &str,
+    key: &str,
+    vig_mat: VigMatrixWrap,
+) -> Result<String, ErrorCode> {
+    let decoded = decode(enc_msg, key, vig_mat)?;
+    let mut decoded_web = "".to_string();
+    for ch in decoded.chars() {
+        match ch {
+            ' ' => decoded_web.push_str("&nbsp;"),
+            '\n' | '\r' => decoded_web.push_str("<br>"),
+            _ => decoded_web.push(ch),
+        };
+    }
+    Ok(decoded_web)
+}
+```
+
+And then in `main.rs` I updated: 
+
+- The memo declaration to call for `decode_web`:
+
+```rust
+// Memo declaration tied to phrase update in the textarea.
+let phrase_update = create_memo(cx, move || {
+        // ..
+        match decode_web(
+            &encr_signal.get().as_ref().clone(),
+            key,
+            mat_signal.get().as_ref().clone(),
+        ) {
+        // ..
+});
+```
+
+- The `view!` macro to properly display the HTML escape characters by using Sycamore's [dangerously_set_inner_html] special attribute:
+
+```rust
+view! { cx,
+        div {
+            // ..
+            p { strong{"Decoded: "} br{}
+                "[" span(style="color:MediumSeaGreen; font-family:'Courier New';"){span(dangerously_set_inner_html=&(disp_decr()))} "]" }
+            // ..
+    }
+```
+
+After applying these changes this is the result:
+
+![Vigenère cipher properly showing spaces](demo-4.gif){: width="837" height="518" }
+_Vigenére cipher whith better space char and new line display_
+
 ---
 
 **_Links, references, and disclaimers:_**
@@ -809,3 +886,8 @@ Don't forget to check the [demo] and the [GitHub] repository.
 [Ferris the crab]:https://rustacean.net/
 [Water.css]:https://watercss.kognise.dev/
 [Sycamore recommendations]:https://sycamore-rs.netlify.app/docs/advanced/optimize_wasm_size
+[Martin Kavík]:https://github.com/MartinKavik
+[v0.1.2]:https://github.com/rsdlt/wasm-vigenere-cipher/releases/tag/v0.1.2
+[v0.1.3]:https://github.com/rsdlt/wasm-vigenere-cipher/releases/tag/v0.1.3
+[updates below]:#updates-fixes-and-new-features
+[dangerously_set_inner_html]:https://sycamore-rs.netlify.app/docs/basics/view#dangerously_set_inner_html
