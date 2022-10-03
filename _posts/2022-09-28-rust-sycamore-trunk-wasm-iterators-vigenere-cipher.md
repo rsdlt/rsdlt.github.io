@@ -17,21 +17,18 @@ image:
 
 > Check the [demo] and the [GitHub] repo.
 
-
 > **Edit:** Since the original post some readers brought to my attention a bug that yielded incorrect decoding. This is now fixed in release [v0.1.2]. Thanks to [Martin Kavík] and others for letting me know. I also added support to properly display multiple continuous space and new line chars in the decoded text in [v0.1.3]. You can check the details in the [updates below].
 {: .prompt-info }
 
-
 Some days ago I came across Tim McNamara's [Rust Code Challenges], a great course by the way, where the final challenge is to develop a [Vigenère cipher], which according to Wikipedia resisted all attempts to break it for 310 years.
 
-After completing Tim's challenge, I thought that deploying a real-time Vigenére cipher on the Web, and without touching a single line of [JavaScript] code would be a fun project. 
+After completing Tim's challenge, I thought that deploying a real-time Vigenére cipher on the Web, and without touching a single line of [JavaScript] code would be a fun project.
 
 Truth is, I loved it!
 
+## Quick summary of the Vigenére cipher
 
-## Quick summary of the Vigenére cipher 
-
-The Vigenére cipher is a simplified poly-alphabetic [substitution] encoder. It's essentially an algorithm where a set of characters or _message_ is substituted with another set of characters or _encoded message_ with the help of a _key_. To decode the encoded message, the receiver performs the inverse substitution process. 
+The Vigenére cipher is a simplified poly-alphabetic [substitution] encoder. It's essentially an algorithm where a set of characters or _message_ is substituted with another set of characters or _encoded message_ with the help of a _key_. To decode the encoded message, the receiver performs the inverse substitution process.
 
 The algorithm has 6 steps:
 
@@ -79,7 +76,7 @@ This were my requirements for this implementation (at least for its `v0.1.0`):
 - Deploy on the Web using WebAssembly
 - Don't touch a line of JavaScript - because if we can do everything in Rust, then why not?
 
-## WebAssembly + Sycamore + Trunk 
+## WebAssembly + Sycamore + Trunk
 
 Based on the requirements, I decided that the best technology stack for this project is the following:
 
@@ -93,14 +90,11 @@ Based on the requirements, I decided that the best technology stack for this pro
     - Which according to the project website is used to _"… build, bundle & ship your Rust WASM application to the web… "_.
     - Pretty neat, and it's also the [recommended build tool] for Sycamore.
 
-
 This is a very powerful triad.
-
 
 ## The solution
 
 For a clear perspective, this is how all the pieces fit together:
- 
 
 ![Vigenère cipher solution diagram](general-solution-diagram.png){: width="793" height="324" }
 _Vigenére cipher general solution diagram_
@@ -120,7 +114,7 @@ These great benefit of this stack is that all the logic is coded in Rust, even t
 
 What really caught my attention with Sycamore is how straightforward it is to define the web user interface components and elements.
 
-The user interface is handled through a [view!] Rust macro with no closing html tags:
+The user interface is handled through a [view!] Rust macro with no closing HTML tags:
 
 ```rust
 view! { cx,
@@ -139,6 +133,7 @@ view! { cx,
 This simplicity allowed me to create the initial boilerplate application, with placeholders, and project structure in minutes:
 
 `src/main.rs`:
+
 ```rust
 mod cipher;
 use cipher::Hello;
@@ -173,6 +168,7 @@ fn main() {
 ```
 
 `index.html`: (the tiny one)
+
 ```html
 <!DOCTYPE html>
 <html>
@@ -185,6 +181,7 @@ fn main() {
 ```
 
 `src/cipher.rs`:
+
 ```rust
 use std::fmt::Display;
 
@@ -204,6 +201,7 @@ impl Display for Hello {
 ```
 
 `Cargo.toml`:
+
 ```toml
 [package]
 name = "wasm-vigenere-cipher"
@@ -242,7 +240,7 @@ With this minimum of scaffolding we can now call Trunk with `trunk serve --open`
 2022-09-28T01:50:41.551202Z  INFO  success
 ```
 
-Trunk spawns a web server and opens the browser window to a fully-reactive application written in Rust:
+Trunk spawns a web server and opens the browser window to a fully reactive application written in Rust:
 
 ![boilerplate reactive web app in Rust](first-reactive-web.gif){: width="665" height="253" }
 _Boilerplate Reactive Web App in Rust with Sycamore and Trunk_
@@ -250,6 +248,7 @@ _Boilerplate Reactive Web App in Rust with Sycamore and Trunk_
 And looking closely at the output from Trunk in the `/dist/` directory:
 
 `/dist/`
+
 ```terminal
  λ la dist
 .rw-r--r-- 1.4k rsdlt 27 Sep 21:50  index.html
@@ -268,6 +267,7 @@ With this boilerplate web application the next step is to implement the actual V
 At least for an MVP `v0.1.0` I have decided on all the non-control ASCII characters plus '\n' and '\r' which yields a set of `192` characters.
 
 `src/cipher.rs`
+
 ```rust
 pub(crate) const SIZE: usize = 192;
 
@@ -278,11 +278,12 @@ pub(crate) struct DictWrap(pub(crate) [char; SIZE]);
 
 I am using an `array` of `chars` with a size defined by a `const` and wrapped by a `tuple struct`.
 
-The reasoning of using a wrapper is because Arrays are always treated as foreign types and the wrap allow for the implementation of foreign traits on them, like `std::fmt::Display`. 
+The reasoning of using a wrapper is because Arrays are always treated as foreign types and the wrap allow for the implementation of foreign traits on them, like `std::fmt::Display`.
 
 The actual implementation for the `DictWrap` type is:
 
 `src/cipher.rs`
+
 ```rust
 // Creates and returns a new dictionary for the Vigenere Matrix.
 impl DictWrap {
@@ -314,9 +315,11 @@ First, defining the actual set in a raw `&str`, converting to `String` to push b
 I'm including a `get_string()` method in order to return the array in `String` form in case is needed for rendering in `HTML`.
 
 ### 2. Generate a Vigenére Matrix
+
 The next step is to create the Vigenére table or matrix with the cycled and shifted elements of the `dictionary`:
 
 `src/cipher.rs`
+
 ```rust
 #[derive(Clone, Copy)]
 pub(crate) struct VigMatrixWrap(pub(crate) [[char; SIZE]; SIZE]);
@@ -348,6 +351,7 @@ And the other interesting part is the use of the [cycle iterator], which essenti
 At least for MVP `v0.1.0` the key is a fixed `&str` hard-coded in `main.rs`:
 
 `src/main.rs`
+
 ```rust
     
     let key = "°¡! RüST íS CóÓL ¡!°";
@@ -359,6 +363,7 @@ At least for MVP `v0.1.0` the key is a fixed `&str` hard-coded in `main.rs`:
 This value is be provided dynamically by the user in the `text` field of the HTML:
 
 `src/main.rs`
+
 ```rust
     view! { cx,
         div {
@@ -377,6 +382,7 @@ On the `cipher.rs` side we will receive that value through the `encode` function
 A function to adjust the size of a `Key` is defined as follows:
 
 `src/cipher.rs`
+
 ```rust
 // Completes the key if the size is not the same as the message.
 fn complete_key(key: &str, msg_size: usize) -> String {
@@ -392,11 +398,12 @@ fn complete_key(key: &str, msg_size: usize) -> String {
 
 The interesting part here is again the use of the [cycle iterator], in order to adjust the size of key as small or as large as the message size.
 
-### 6. Encode / Decode functions 
+### 6. Encode / Decode functions
 
 Finally comes the actual encryption logic. Let's start with the `Encode` function first:
 
 `src/cipher.rs`
+
 ```rust
 // Encodes a message (msg) with a key (key) using a Vigenere Matix (vig_mat).
 pub(crate) fn encode(msg: &str, key: &str, vig_mat: VigMatrixWrap) -> Result<String, ErrorCode> {
@@ -432,6 +439,7 @@ We define a `function` that receives a `message`, a `key` and a `Vigenére Matri
 The fine part is the use of another `function`, called `vig_matcher`:
 
 `src/cipher.rs`
+
 ```rust
 // Returns the matching character in the Vigenere matrix, depending
 // on the header (ch_m) and column (ch_k) characters provided
@@ -446,6 +454,7 @@ fn vig_matcher(m: &VigMatrixWrap, ch_m: char, ch_k: char) -> Result<char, ErrorC
 Which actually perform the match of each character between the `Message` and the `Key` by finding their indices in the `Vigenére Matrix` via an `idx_finder` function, that either returns an `index` for matching or an `ErrorCode`:
 
 `src/cipher.rs`
+
 ```rust
 // Returns the index value of a char in the Vigenere matrix.
 fn idx_finder(ch: char, m: &VigMatrixWrap) -> Result<usize, ErrorCode> {
@@ -459,10 +468,10 @@ fn idx_finder(ch: char, m: &VigMatrixWrap) -> Result<usize, ErrorCode> {
 
 ```
 
-
 And now the `Decode` function:
 
 `src/cipher.rs`
+
 ```rust
 // Decodes an encoded message (enc_msg) with a key (key) and a Vigenere Matrix (vig_mat).
 pub(crate) fn decode(
@@ -506,6 +515,7 @@ pub(crate) fn decode(
 It's the reverse substitution from that of `Encode` and utilizing a `char_finder` function inside the `Vigenére Matrix`:
 
 `src/cipher.rs`
+
 ```rust
 // Returns the char value of an index in the Vigenere matrix
 fn char_finder(idx: usize, m: &VigMatrixWrap) -> Result<char, ErrorCode> {
@@ -523,6 +533,7 @@ The function returns either the `char` or an `ErrorCode`.
 The error codes are defined in the following `Enum`:
 
 `src/cipher.rs`
+
 ```rust
 #[derive(Debug)]
 pub(crate) enum ErrorCode {
@@ -540,6 +551,7 @@ Now, we just have to connect that logic with the web front-end and user interfac
 First declare and initialize the dictionary and the relevant `reactive primitives` via [Sycamore signals]:
 
 `src/main.rs`
+
 ```rust
 #[component]
 fn App<G: Html>(cx: Scope) -> View<G> {
@@ -569,6 +581,7 @@ Next, we create a [Sycamore memo] which essentially recomputes derive values whe
 If it's empty, then set the encoded, decoded and warning signals empty as well.
 
 `src/main.rs`
+
 ```rust
     // Memo declaration tied to phrase update in the textarea.
     let phrase_update = create_memo(cx, move || {
@@ -620,6 +633,7 @@ If it's empty, then set the encoded, decoded and warning signals empty as well.
 If any of the signals has changed, then the display messages need to change accordingly:
 
 `src/main.rs`
+
 ```rust
     let disp_dict = || {
         if dict_signal.get().is_empty() {
@@ -654,6 +668,7 @@ If any of the signals has changed, then the display messages need to change acco
 Next, we can update the `view!` macro to make it a little more attractive with minimum `CSS` and use a `textarea` for the user input:
 
 `src/main.rs`
+
 ```rust
     view! { cx,
         div {
@@ -682,6 +697,7 @@ Next, we can update the `view!` macro to make it a little more attractive with m
 And we can include a `CSS` library, in this case [Water.css], and a icon of [Ferris the crab] the `header` of our tiny HTML:
 
 `index.html`
+
 ```html
 <!DOCTYPE html>
 <html>
@@ -704,12 +720,12 @@ _Vigenére cipher working real-time_
 ![Vigenère cipher error handling](demo-2.gif){: width="824" height="328" }
 _Vigenére cipher error handling_
 
-
 ## Final optimizations
 
 Finally, we can follow [Sycamore recommendations] to optimize the Wasm binary size:
 
 `Cargo.toml`
+
 ```toml
 [profile.release]
 # no backtrace for panic on release
@@ -722,8 +738,8 @@ opt-level = 'z'
 lto = true
 ```
 
-
 `index.html`
+
 ```html
     <link data-trunk rel="rust" data-wasm-opt="z" />
 ```
@@ -778,19 +794,23 @@ Don't forget to check the [demo] and the [GitHub] repository.
 
 There was an issue that in some cases yielded an incorrect decoded text. This was because:
 
-- I left an incorrect number of characters in the `SIZE` constant. The correct number is 192, instead of 225.
-- I had an extra space `' '` in the hard-coded dictionary string.
+- An incorrect number of characters in the `SIZE` constant was not updated. The correct number is 192, instead of 225.
+- An erroneous extra space char `' '` in the hard-coded dictionary string.
 
-The supported dictionary of characters is not affected.
+The supported list of characters in the dictionary is not affected.
 
-The issue was corrected in [v0.1.2]. 
+The issue was corrected in release [v0.1.2].
+
 ### New features
 
-In [v0.1.3] I added support for properly displaying continuous space characters and carriage return / new lines  in the decoded text.
+In [v0.1.3] support was added for properly displaying continuous space characters and carriage return / new lines  in the decoded text.
 
-To accomplish it, I added a new function named `decode_web` that calls the original `decode` function, then loops through the text and inserts an `&nbsp;` or a `<br>` if it finds a space `' '` or a `'\r'` or `\n` characters, respectively:
+To accomplish it, a new function named `decode_web()` was included.
+
+`decode_web` calls the original `decode()` function, then loops through the text and inserts an `&nbsp;` or a `<br>` if it finds a space `' '` or a `'\r'` or `\n` characters, respectively:
 
 `src/cipher.rs`
+
 ```rust
 pub(crate) fn decode_web(
     enc_msg: &str,
@@ -810,9 +830,11 @@ pub(crate) fn decode_web(
 }
 ```
 
-And then in `main.rs` I updated: 
+And then in `src/main.rs`, the following updates were implemented:
 
-- The memo declaration to call for `decode_web`:
+- The memo declaration to call for `decode_web()` instead of `decode()`:
+
+`src/main.rs`
 
 ```rust
 // Memo declaration tied to phrase update in the textarea.
@@ -829,6 +851,8 @@ let phrase_update = create_memo(cx, move || {
 
 - The `view!` macro to properly display the HTML escape characters by using Sycamore's [dangerously_set_inner_html] special attribute:
 
+`src/main.rs`
+
 ```rust
 view! { cx,
         div {
@@ -842,7 +866,7 @@ view! { cx,
 After applying these changes this is the result:
 
 ![Vigenère cipher properly showing spaces](demo-4.gif){: width="837" height="518" }
-_Vigenére cipher whith better space char and new line display_
+_Vigenére cipher with better space char and new line display_
 
 ---
 
