@@ -19,7 +19,7 @@ image:
 
 Some days ago I came across Tim McNamara's [Rust Code Challenges], a great course by the way, where the final challenge is to develop a [Vigenère cipher], which according to Wikipedia resisted all attempts to break it for 310 years.
 
-After completing the Tim's challenge, I thought that deploying a real-time Vigenére cipher on the Web, and without touching a single [JavaScript] line of code would be a fun project. 
+After completing Tim's challenge, I thought that deploying a real-time Vigenére cipher on the Web, and without touching a single line of [JavaScript] code would be a fun project. 
 
 Truth is, I loved it!
 
@@ -260,11 +260,11 @@ With this boilerplate web application the next step is to implement the actual V
 
 ### 1. Define the 'alphabet' or 'dictionary'
 
-At least for an MVP `v0.1.0` I have decided on all the non-control ASCII characters plus '\n' and '\r' which yields a set of `225` characters.
+At least for an MVP `v0.1.0` I have decided on all the non-control ASCII characters plus '\n' and '\r' which yields a set of `192` characters.
 
 `src/cipher.rs`
 ```rust
-pub(crate) const SIZE: usize = 225;
+pub(crate) const SIZE: usize = 192;
 
 #[derive(Clone, Copy)]
 pub(crate) struct DictWrap(pub(crate) [char; SIZE]);
