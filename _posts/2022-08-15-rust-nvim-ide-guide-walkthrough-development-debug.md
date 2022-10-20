@@ -15,9 +15,13 @@ image:
     alt: My Rust development environment with Neovim  
 ---
 
+> **Edit:** Some readers mentioned an issue with the example Lua code used to configure the [simrat39/rust-tools.nvim] plugin; that configuration code has been updated with the [example configuration](https://github.com/simrat39/rust-tools.nvim#setup) recommended in the plugin page as of the date of this edit. Thanks to [Nazar Toakarak](https://github.com/Tokarak) for letting me know. <br />Readers have also asked me about the link to my latest Neovim config files, you can find them [here](https://github.com/rsdlt/nvim-config-files).
+{: .prompt-info }
+
+
 This post is a detailed explanation and walkthrough of how I set up my Rust development environment and workflow with Neovim.
 
-## Prerquisites
+## Prerequisites
 
 - Have the following installed: 
     - [Rust](https://www.rust-lang.org/learn/get-started).
@@ -193,30 +197,22 @@ return require('packer').startup(function()
 end)
 ```
 
-Now, we need to setup Neovim so that it can interact with rust-analyzer: 
-
+Now, we need to setup Neovim so that it can interact with rust-analyzer. We can use the code provided in the [example config](https://github.com/simrat39/rust-tools.nvim#setup) recommended by the rust-tools.vim plugin:
 
 `.config/nvim/init.lua`
 ```lua
-local rt = {
-    server = {
-        settings = {
-            on_attach = function(_, bufnr)
-                -- Hover actions
-                vim.keymap.set("n", "<C-space>", rt.hover_actions.hover_actions, { buffer = bufnr })
-                -- Code action groups
-                vim.keymap.set("n", "<Leader>a", rt.code_action_group.code_action_group, { buffer = bufnr })
-                require 'illuminate'.on_attach(client)
-            end,
-            ["rust-analyzer"] = {
-                checkOnSave = {
-                    command = "clippy"
-                }, 
-            },
-        }
-    },
-}
-require('rust-tools').setup(rt)
+local rt = require("rust-tools")
+
+rt.setup({
+  server = {
+    on_attach = function(_, bufnr)
+      -- Hover actions
+      vim.keymap.set("n", "<C-space>", rt.hover_actions.hover_actions, { buffer = bufnr })
+      -- Code action groups
+      vim.keymap.set("n", "<Leader>a", rt.code_action_group.code_action_group, { buffer = bufnr })
+    end,
+  },
+})
 ```
 
 Further customization options are available via rust-tools [configuration](https://github.com/simrat39/rust-tools.nvim#configuration). 
