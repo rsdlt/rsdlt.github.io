@@ -161,15 +161,31 @@ end)
 ```
 Then we just save `:w`, reload `:luafile %` and install with `:PackerInstall`.
 
+After Mason is installed, we need to set it up in our config file `init.lua`:
+```lua
+-- Mason Setup
+require("mason").setup({
+    ui = {
+        icons = {
+            package_installed = "",
+            package_pending = "",
+            package_uninstalled = "",
+        },
+    }
+})
+require("mason-lspconfig").setup()
+```
+Thanks to [Eric Smith](https://github.com/paytonrules) for suggesting including Mason's setup in 
+this guide.
 
 > I could use other package managers to install plugins or LSPs, however, I prefer Packer and Mason because they are written entirely in Lua, are getting traction within the Neovim developer community, and they work great.
 {: .prompt-tip }
 
-Once Mason is installed, we use it to install and manage rust-analyzer and CodeLLDB:
+Once Mason is installed and setup, we can use it to install and manage rust-analyzer and CodeLLDB:
 
 On Neovim command mode we input `:MasonInstall rust-analyzer codelldb`.
 
-When Manson finishes, we we can check with `:Mason` that we have rust-analyzer and CodeLLDB installed.
+When Manson finishes, we can check with `:Mason` that we have rust-analyzer and CodeLLDB installed.
 
 ![Installing rust-analyzer and CodeLLDB with Mason](rsdlt-rust-ide-4.png){: .shadow width="890" height="281" style="max-width: 90%" }
 _Mason installing rust-analyzer and CodeLLDB for Neovim_
