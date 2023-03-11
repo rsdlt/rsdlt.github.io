@@ -1,7 +1,7 @@
 ---
 title: Ruxel - Building a Ray Tracer with Rust Part 2
 author: rsdlt
-date: 2022-10-06 06:20:00 +0800
+date: 2023-03-10 06:20:00 +0800
 categories: [Rust, Ray Tracer]
 tags: [rust, 3D, ray tracer, render, rendering, struct, enum, trait, generics]
 pin:
@@ -19,7 +19,7 @@ This post is **Part 2** in a [series] to share my journey in developing [Ruxel],
 
 
 ## Generics Refactor
-
+what is happening
 ## Canvas
 
 ## Matrix
