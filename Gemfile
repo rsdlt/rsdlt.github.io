@@ -2,7 +2,7 @@
 
 source "https://rubygems.org"
 
-ruby ">=2.7"
+ruby ">=2.6"
 
 group :test do
   gem "html-proofer", "~> 3.18"
@@ -35,4 +35,4 @@ gem "jekyll-seo-tag", "~> 2.7"
 gem "jekyll-archives", "~> 2.2"
 gem "jekyll-sitemap", "~> 1.4"
 
-gem "sass-embedded", "~> 1.54"
+gem "jekyll-sass-converter", "~> 2.0"
