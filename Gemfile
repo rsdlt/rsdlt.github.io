@@ -2,7 +2,7 @@
 
 source "https://rubygems.org"
 
-ruby ">=3.0"
+ruby ">=2.7"
 
 group :test do
   gem "html-proofer", "~> 3.18"
@@ -23,9 +23,9 @@ gem "wdm", "~> 0.1.1", :platforms => [:mingw, :x64_mingw, :mswin]
 gem "http_parser.rb", "~> 0.6.0", :platforms => [:jruby]
 
 # Lock jekyll-sass-converter to 2.x on Linux-musl
-if RUBY_PLATFORM =~ /linux-musl/
-  gem "jekyll-sass-converter", "~> 2.0"
-end
+# if RUBY_PLATFORM =~ /linux-musl/
+#  gem "jekyll-sass-converter", "~> 2.0"
+# end
 
 gem "jekyll-theme-chirpy", "~> 5.6", ">= 5.6.1"
 gem "jekyll", "~> 4.3"
@@ -34,3 +34,5 @@ gem "jekyll-redirect-from", "~> 0.16"
 gem "jekyll-seo-tag", "~> 2.7"
 gem "jekyll-archives", "~> 2.2"
 gem "jekyll-sitemap", "~> 1.4"
+
+gem "sass-embedded", "~> 1.54"
