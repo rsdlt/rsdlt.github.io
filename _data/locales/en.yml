@@ -14,6 +14,7 @@ tabs:
   categories: Categories
   tags: Tags
   archives: Archives
+  terms: Terms
   about: About
 
 # the text displayed in the search bar & search results
@@ -35,7 +36,7 @@ copyright:
     link: https://creativecommons.org/licenses/by/4.0/
 
   # Displayed in the footer
-  brief: <br />Use of this site is subject to our <a href="/about/">Terms of Use.<a>
+  brief: <br />Use of this site is subject to our <a href="/about/#terms-of-use">Terms of Use.<a>
   verbose: >-
     Except where otherwise noted, the blog posts on this site are licensed
     under the Creative Commons Attribution 4.0 International (CC BY 4.0) License by the author.

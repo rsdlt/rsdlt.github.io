@@ -29,7 +29,7 @@ title: the trait # the main title
 tagline: Rodrigo Santiago   # it will display as the sub-title
 
 description: >-                        # used by seo meta and the atom feed
-  A place where I share my personal ideas about the Rust Programming Language, 3D graphics, technology and other fun stuff...
+  My personal blog where I share my projects and ideas about the technology topics I'm passionate about.
 # fill in the protocol & hostname for your site, e.g., 'https://username.github.io'
 url: 'https://rsdlt.github.io'
 
@@ -42,15 +42,15 @@ twitter:
 social:
   # Change to your full name.
   # It will be displayed as the default author of the posts and the copyright owner in the Footer
-  name: Rodrigo Santiago 
+  name: Rodrigo Santiago
   email: rsdlt@pm.me             # change to your email address
   links:
     # The first element serves as the copyright owner's link
     - https://github.com/rsdlt # change to your github homepage
-    - https://twitter.com/_rsdlt # change to your twitter homepage
-    # Uncomment below to add more social links
+      #- https://twitter.com/_rsdlt # change to your twitter homepage
+      # Uncomment below to add more social links
     # - https://www.facebook.com/username
-    # - https://www.linkedin.com/in/username
+    - https://www.linkedin.com/in/rsdlt
 
 google_site_verification:               # fill in to your verification string
 
@@ -75,7 +75,7 @@ google_analytics:
 #     light  - Use the light color scheme
 #     dark   - Use the dark color scheme
 #
-theme_mode: # [light|dark]
+theme_mode: dark # [light|dark]
 
 # The CDN endpoint for images.
 # Notice that once it is assigned, the CDN url
@@ -126,7 +126,7 @@ paginate: 10
 
 kramdown:
   syntax_highlighter: rouge
-  syntax_highlighter_opts:   # Rouge Options › https://github.com/jneen/rouge#full-options
+  syntax_highlighter_opts: # Rouge Options › https://github.com/jneen/rouge#full-options
     css_class: highlight
     # default_lang: console
     span:
@@ -180,7 +180,7 @@ compress_html:
   profile: false
   blanklines: false
   ignore:
-    envs: [development]
+    envs: [ development ]
 
 exclude:
   - '*.gem'
@@ -194,7 +194,7 @@ exclude:
   - package*.json
 
 jekyll-archives:
-  enabled: [categories, tags]
+  enabled: [ categories, tags ]
   layouts:
     category: category
     tag: tag
