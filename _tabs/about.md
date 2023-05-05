@@ -12,8 +12,8 @@ order: 4
 
 Experience building and deploying mission-critical solutions, in Agile and Waterfall
 models, for the Financial Services and Telco industries in different countries. <br><br>
-Led large geographically-dispersed and multi-disciplinary teams to launch digital solutions and
-services on time, under budget, and following best SDLC practices and Test-Driven Development.
+Led large geographically-dispersed and multi-disciplinary teams to launch digital solutions
+following best SDLC practices and Test-Driven Development.
 <br>
 
 ## Work Experience:
