@@ -1,0 +1,66 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "@/layouts/Layout.astro";
+import Header from "@/components/Header.astro";
+import Breadcrumb from "@/components/Breadcrumb.astro";
+import Main from "@/components/Main.astro";
+import Footer from "@/components/Footer.astro";
+import Card from "@/components/Card.astro";
+import { getSortedPosts } from "@/utils/getSortedPosts";
+import config from "@/config";
+
+const SERIES_TAG = "foambyte";
+
+const posts = await getCollection("posts");
+// Oldest first: the series reads as the story of the architecture.
+const seriesPosts = getSortedPosts(posts)
+  .filter(({ data }) => data.tags.includes(SERIES_TAG))
+  .reverse();
+
+const postsByYear = Object.entries(
+  Object.groupBy(seriesPosts, ({ data }) =>
+    String(data.pubDatetime.getFullYear())
+  )
+);
+
+const title = "Foambyte Engineering Series";
+const description =
+  "How I designed and built Foambyte, a brewing production platform: React, Capacitor, Hono, Cloudflare Workers, PlanetScale Postgres and more, in the order it happened.";
+---
+
+<Layout title={`${title} | ${config.site.title}`} {description}>
+  <Header />
+
+  <Breadcrumb />
+
+  <Main pageTitle={title} pageDesc={description}>
+    <p>
+      <a
+        href="https://foambyte.com"
+        target="_blank"
+        rel="noopener"
+        class="hover:text-accent underline decoration-dashed underline-offset-4"
+        >Foambyte</a
+      > is a production-management platform for craft brewers that I co-founded with
+      my brother Diego, a brewmaster who leads the product as CPO. I designed and
+      built the platform. These {seriesPosts.length} posts document its architecture
+      as it evolved: each one explains a decision, the alternatives, and why it was
+      the right trade-off at the time.
+    </p>
+
+    {
+      postsByYear.map(([year, yearPosts]) => (
+        <section class="mt-10">
+          <h2 class="text-xl font-semibold">{year}</h2>
+          <ul>
+            {yearPosts?.map(data => (
+              <Card variant="h3" {...data} />
+            ))}
+          </ul>
+        </section>
+      ))
+    }
+  </Main>
+
+  <Footer />
+</Layout>

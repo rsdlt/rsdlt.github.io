@@ -24,6 +24,9 @@ const posts = await getCollection("posts");
 const sortedPosts = getSortedPosts(posts);
 const featuredPosts = sortedPosts.filter(({ data }) => data.featured);
 const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
+const foambytePostCount = sortedPosts.filter(({ data }) =>
+	data.tags.includes("foambyte"),
+).length;
 const homePath = getRelativeLocaleUrl(locale, "");
 const bioLinkClass =
 	"hover:text-accent underline decoration-dashed underline-offset-4";
@@ -115,6 +118,13 @@ const bioLinkClass =
 
       <p class="text-muted-foreground mt-6">
         Languages: English &amp; Spanish · basic Portuguese
+      </p>
+
+      <p class="mt-4">
+        Read the
+        <a href={getRelativeLocaleUrl(locale, "foambyte")} class={bioLinkClass}
+          >Foambyte engineering series</a
+        >: {foambytePostCount} posts on the architecture behind the platform.
       </p>
       {
         socials.length > 0 && (
