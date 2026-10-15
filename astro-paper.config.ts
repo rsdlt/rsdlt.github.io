@@ -2,7 +2,7 @@ import { defineAstroPaperConfig } from "./src/types/config";
 
 export default defineAstroPaperConfig({
   site: {
-    url: "https://rsdlt.github.io/",
+    url: "https://rsdlt.dev/",
     title: "rsdlt.dev",
     description:
       "My personal blog where I share my projects and ideas about the technology topics I'm passionate about.",

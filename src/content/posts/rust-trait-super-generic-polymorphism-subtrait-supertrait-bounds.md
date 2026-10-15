@@ -538,9 +538,9 @@ Header Photo by [Brecht Corbeel](https://unsplash.com/@brechtcorbeel) on [Unspla
 [Rust API Guidelines]:https://rust-lang.github.io/api-guidelines/about.html
 [GitHub repository]:https://github.com/rsdlt/ruxel
 [Rust]:https://www.rust-lang.org
-[Series Prelude]:https://rsdlt.github.io/posts/ruxel-ray-tracer-project-first-update-rust-programming-development/
-[Goals]:https://rsdlt.github.io/posts/ruxel-ray-tracer-project-first-update-rust-programming-development/#goals-for-ruxel-version-010
-[Ruxel Part 1]:https://rsdlt.github.io/posts/ruxel-part-1-rust-ray-tracer-renderer-3d-development/
+[Series Prelude]:/posts/ruxel-ray-tracer-project-first-update-rust-programming-development/
+[Goals]:/posts/ruxel-ray-tracer-project-first-update-rust-programming-development/#goals-for-ruxel-version-010
+[Ruxel Part 1]:/posts/ruxel-part-1-rust-ray-tracer-renderer-3d-development/
 [Alacritty]:https://alacritty.org/
 [Tmux]:https://github.com/tmux/tmux
 [Neovim]:https://neovim.io/

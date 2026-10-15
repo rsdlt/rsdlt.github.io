@@ -959,8 +959,8 @@ In **Part 2** we will focus on:
 [Rust API Guidelines]:https://rust-lang.github.io/api-guidelines/about.html
 [GitHub repository]:https://github.com/rsdlt/ruxel
 [Rust]:https://www.rust-lang.org
-[Series Prelude]:https://rsdlt.github.io/posts/ruxel-ray-tracer-project-first-update-rust-programming-development/
-[Goals]:https://rsdlt.github.io/posts/ruxel-ray-tracer-project-first-update-rust-programming-development/#goals-for-ruxel-version-010
+[Series Prelude]:/posts/ruxel-ray-tracer-project-first-update-rust-programming-development/
+[Goals]:/posts/ruxel-ray-tracer-project-first-update-rust-programming-development/#goals-for-ruxel-version-010
 [Alacritty]:https://alacritty.org/
 [Tmux]:https://github.com/tmux/tmux
 [Neovim]:https://neovim.io/

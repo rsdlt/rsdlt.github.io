@@ -896,7 +896,7 @@ _Vigenére cipher with better space char and new line display_
 [interaction]:https://developer.mozilla.org/en-US/docs/WebAssembly/JavaScript_interface
 [view!]:https://sycamore-rs.netlify.app/docs/basics/view
 [6 steps outlined above]:#quick-summary-of-the-vigenére-cipher
-[Newtype Pattern]:https://rsdlt.github.io/posts/rust-use-newtype-pattern-display-trait-array-generics/
+[Newtype Pattern]:/posts/rust-use-newtype-pattern-display-trait-array-generics/
 [cycle iterator]:https://doc.rust-lang.org/std/iter/struct.Cycle.html
 [Sycamore signals]:https://sycamore-rs.netlify.app/docs/basics/reactivity#signal
 [Sycamore memo]:https://sycamore-rs.netlify.app/docs/basics/reactivity#memos
