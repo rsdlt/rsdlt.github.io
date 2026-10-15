@@ -7,8 +7,4 @@ solutions' segment in Latin America and the Caribbean.
 
 I am also a [Rust] enthusiast.
 
-## Contact
-
-Feel free to contact me at rsdlt@pm.me
-
 [Rust]: https://www.rust-lang.org 
