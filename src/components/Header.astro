@@ -14,6 +14,13 @@ import config from "@/config";
 
 const { site, features } = config;
 
+// Show a domain-style title's TLD (e.g. ".dev") in the accent color.
+const tldIndex = site.title.lastIndexOf(".");
+const [titleName, titleTld] =
+  tldIndex > 0
+    ? [site.title.slice(0, tldIndex), site.title.slice(tldIndex)]
+    : [site.title, ""];
+
 const locale = Astro.currentLocale ?? config.site.lang;
 const t = useTranslations(locale);
 
@@ -52,7 +59,7 @@ const isActive = (path: string) => {
       href={getRelativeLocaleUrl(locale, "")}
       class="absolute py-1 text-xl leading-8 font-semibold whitespace-nowrap sm:static sm:my-auto sm:text-2xl sm:leading-none"
     >
-      {site.title}
+      {titleName}<span class="text-accent">{titleTld}</span>
     </a>
     <nav
       id="nav-menu"
