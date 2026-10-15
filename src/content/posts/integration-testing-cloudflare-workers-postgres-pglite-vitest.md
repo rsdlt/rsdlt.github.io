@@ -95,4 +95,4 @@ There is no separate CI service. Cloudflare's build command for the app runs the
 
 ---
 
-*I'm Rodrigo Santiago, a product leader who builds. I designed and built [Foambyte](https://foambyte.com) end to end: architecture, frontend, backend, mobile and infrastructure. If you need someone who can own both the product and the code, [let's talk on LinkedIn](https://www.linkedin.com/in/rsdlt).*
+*I'm Rodrigo Santiago, a product leader who builds. I co-founded [Foambyte](https://foambyte.com) with my brother Diego, a brewmaster who leads the product as CPO, and I designed and built the platform: architecture, frontend, backend, mobile and infrastructure. If you need someone who can own both the product and the code, [let's talk on LinkedIn](https://www.linkedin.com/in/rsdlt).*

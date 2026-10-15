@@ -5,7 +5,7 @@ description: "Why I built Foambyte as a React 19 SPA packaged with Capacitor ins
 tags: ["react", "capacitor", "tanstack", "frontend", "architecture", "typescript", "foambyte"]
 ---
 
-Brewers plan recipes at a desk and log readings standing next to a fermentation tank with a phone in one hand. [Foambyte](https://foambyte.com), the production-management platform I build for craft brewers, has to work well in both places. I'm also its only developer, so I need one codebase for the web, iOS and Android, not three.
+Brewers plan recipes at a desk and log readings standing next to a fermentation tank with a phone in one hand. [Foambyte](https://foambyte.com), the production-management platform my brother Diego and I build for craft brewers, has to work well in both places. Diego is a brewmaster and leads the product; I'm the only developer, so I need one codebase for the web, iOS and Android, not three.
 
 This post explains the frontend architecture I chose and why I think it's the right trade-off for a product like this.
 
@@ -145,4 +145,4 @@ In the next post I'll cover the other half of this setup: how the frontend and t
 
 ---
 
-*I'm Rodrigo Santiago, a product leader who builds. I designed and built [Foambyte](https://foambyte.com) end to end: architecture, frontend, backend, mobile and infrastructure. If you need someone who can own both the product and the code, [let's talk on LinkedIn](https://www.linkedin.com/in/rsdlt).*
+*I'm Rodrigo Santiago, a product leader who builds. I co-founded [Foambyte](https://foambyte.com) with my brother Diego, a brewmaster who leads the product as CPO, and I designed and built the platform: architecture, frontend, backend, mobile and infrastructure. If you need someone who can own both the product and the code, [let's talk on LinkedIn](https://www.linkedin.com/in/rsdlt).*

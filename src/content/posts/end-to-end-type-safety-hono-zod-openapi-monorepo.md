@@ -5,7 +5,7 @@ description: "How Foambyte's React frontend and Hono API share one type-checked 
 tags: ["typescript", "hono", "zod", "openapi", "drizzle", "monorepo", "api design", "foambyte"]
 ---
 
-The most expensive bug in a solo-built product is the one where the frontend and the API quietly disagree. A field gets renamed on the server, the UI still compiles, and a brewer finds out in production when a form stops saving.
+The most expensive bug in a product with a single developer is the one where the frontend and the API quietly disagree. A field gets renamed on the server, the UI still compiles, and a brewer finds out in production when a form stops saving.
 
 In [Foambyte](https://foambyte.com) that class of bug can't reach a deploy, because the frontend and the API are type-checked against the same contract. This post explains how that contract is built, and why I chose OpenAPI over tRPC or an RPC client.
 
@@ -143,4 +143,4 @@ Next, I'll go one layer down: running this API on Cloudflare Workers, and the mi
 
 ---
 
-*I'm Rodrigo Santiago, a product leader who builds. I designed and built [Foambyte](https://foambyte.com) end to end: architecture, frontend, backend, mobile and infrastructure. If you need someone who can own both the product and the code, [let's talk on LinkedIn](https://www.linkedin.com/in/rsdlt).*
+*I'm Rodrigo Santiago, a product leader who builds. I co-founded [Foambyte](https://foambyte.com) with my brother Diego, a brewmaster who leads the product as CPO, and I designed and built the platform: architecture, frontend, backend, mobile and infrastructure. If you need someone who can own both the product and the code, [let's talk on LinkedIn](https://www.linkedin.com/in/rsdlt).*
