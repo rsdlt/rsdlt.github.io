@@ -15,7 +15,9 @@ type Props = {
   canonicalURL?: string;
 };
 
-const { site } = config;
+const { site, features } = config;
+// Without the light/dark toggle the site is dark-only.
+const darkOnly = !features.lightAndDarkMode;
 
 const {
   title = site.title,
@@ -35,6 +37,7 @@ const rssHref = getRelativeLocaleUrl(
 <html
   dir={site.dir ?? "ltr"}
   lang={Astro.currentLocale ?? site.lang}
+  data-theme={darkOnly ? "dark" : undefined}
   class="overflow-y-scroll scroll-smooth"
 >
   <head>
@@ -47,7 +50,7 @@ const rssHref = getRelativeLocaleUrl(
 
     <!-- Font -->
     <Font
-      cssVariable="--font-google-sans-code"
+      cssVariable="--font-jetbrains-mono"
       preload={[{ subset: "latin", weight: 400, style: "normal" }]}
     />
 
@@ -100,18 +103,20 @@ const rssHref = getRelativeLocaleUrl(
       Inline FOUC-prevention script: sets data-theme on <html> before
       the browser paints. Runs synchronously, no defer/async.
     -->
-    <script is:inline>
+    <script is:inline define:vars={{ darkOnly }}>
       (function () {
         const stored = localStorage.getItem("theme");
         const prefersDark = window.matchMedia(
           "(prefers-color-scheme: dark)"
         ).matches;
-        const theme = stored ?? (prefersDark ? "dark" : "light");
+        const theme = darkOnly
+          ? "dark"
+          : (stored ?? (prefersDark ? "dark" : "light"));
         const root = document.firstElementChild;
         root?.setAttribute("data-theme", theme);
         root?.classList.toggle("dark", theme === "dark");
         // Expose value so theme.ts can skip re-detection.
-        window.__theme = { value: theme };
+        window.__theme = { value: theme, locked: darkOnly };
       })();
     </script>
 

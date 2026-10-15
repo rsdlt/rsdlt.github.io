@@ -7,7 +7,7 @@
   --color-muted: var(--muted);
   --color-muted-foreground: var(--muted-foreground);
   --color-border: var(--border);
-  --font-app: var(--font-google-sans-code);
+  --font-app: var(--font-jetbrains-mono);
 }
 
 /* Light theme values */
@@ -22,13 +22,14 @@
   --border: #ece9e9;
 }
 
-/* Dark theme values */
+/* Dark theme values, from the Ghostty "0x96f" theme */
 [data-theme="dark"] {
-  --background: #212737;
-  --foreground: #eaedf3;
-  --accent: #ff6b01;
-  --accent-foreground: #ffffff;
-  --muted: #343f60;
-  --muted-foreground: #afb9ca;
-  --border: #ab4b08;
+  --background: #262427; /* background */
+  --foreground: #fcfcfa; /* foreground */
+  --accent: #ffc739; /* palette 3, yellow */
+  --accent-foreground: #262427;
+  --muted: #363437;
+  /* Faint text: foreground at Ghostty's default faint-opacity (0.5) */
+  --muted-foreground: #919090;
+  --border: #545452; /* palette 8, bright black */
 }

@@ -3,7 +3,7 @@ import { defineAstroPaperConfig } from "./src/types/config";
 export default defineAstroPaperConfig({
   site: {
     url: "https://rsdlt.github.io/",
-    title: "the trait",
+    title: "rosantiago.dev",
     description:
       "My personal blog where I share my projects and ideas about the technology topics I'm passionate about.",
     author: "Rodrigo Santiago",
@@ -19,7 +19,7 @@ export default defineAstroPaperConfig({
     scheduledPostMargin: 15 * 60 * 1000,
   },
   features: {
-    lightAndDarkMode: true,
+    lightAndDarkMode: false,
     dynamicOgImage: true,
     showArchives: true,
     showBackButton: true,
