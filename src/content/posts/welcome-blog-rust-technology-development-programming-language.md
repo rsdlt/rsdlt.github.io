@@ -1,13 +1,9 @@
 ---
-title: Basic Operator Overloading with Traits 
-author: rsdlt
-date: 2022-08-07 12:22:00 +0800
-categories: [Rust, Traits]
-tags: [rust, traits, operator overloading, user-define types, expressions]
-pin: 
-math: true
+title: "Basic Operator Overloading with Traits"
+pubDatetime: 2022-08-07T12:22:00+08:00
+description: "How Rust lets you overload arithmetic operators on your own user-defined types by implementing traits, using vector addition as the running example."
+tags: ["rust", "traits", "operator overloading", "user-define types", "expressions"]
 ---
-
 
 In this post I want to share one of my favorite characteristics about Rust: how it provides the capability to **overload an operator** to support arithmetic (and other) operations on our own **user-defined types**. 
 

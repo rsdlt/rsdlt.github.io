@@ -1,19 +1,12 @@
 ---
-title: How to Use Rust Traits, Generics and Bounds  
-author: rsdlt
-date: 2022-09-06 21:30:00 +0800
-categories: [Rust, Traits]
-tags: [rust, trait, supertrait, generics, struct, refactoring, bounds]
-pin:
-math: true
-mermaid: true
-img_path: /assets/img/rust-generics-traits/ 
-image:
-  path: brecht-corbeel-8TttTCQLUKw-unsplash.jpg
-  width: 1229 
-  height: 531 
-  alt: Photo by Brecht Corbeel via Unsplash 
+title: "How to Use Rust Traits, Generics and Bounds"
+pubDatetime: 2022-09-06T21:30:00+08:00
+description: "Refactoring Ruxel's vector and point types with generics, supertraits, subtraits and trait bounds to make the code more idiomatic and extensible."
+tags: ["rust", "traits", "trait", "supertrait", "generics", "struct", "refactoring", "bounds"]
+ogImage: "../../assets/images/rust-generics-traits/brecht-corbeel-8TttTCQLUKw-unsplash.jpg"
 ---
+
+![Photo by Brecht Corbeel via Unsplash](../../assets/images/rust-generics-traits/brecht-corbeel-8TttTCQLUKw-unsplash.jpg)
 
 Every time I am developing the question I am always asking myself is _"is this code idiomatic, ergonomic and extendable enough?"_
 
@@ -61,7 +54,7 @@ And both types are _the_ workhorses of the entire project so they need to be imp
 
 In summary, this is the scenario to implement:
 
-![Point3 vs Vector3](point3-vector3-comparison.png){: w="792" h="569"}
+![Point3 vs Vector3](../../assets/images/rust-generics-traits/point3-vector3-comparison.png)
 _Point3 vs Vector3_
 
 What's the best approach?
@@ -332,11 +325,11 @@ And most important: there is no impact on the speed and performance because this
 
 One additional Rust feature to further provide _extensibility_ to the project is to define three traits in order to group the common behavior in a logical way via `supertraits` and `subtraits`:
 
-![Supertrait and Subtrait structure](point3-vector3-supertrait-subtrait.png){: w="737" h="540"}
+![Supertrait and Subtrait structure](../../assets/images/rust-generics-traits/point3-vector3-supertrait-subtrait.png)
 _Tuple Supertrait with Vector and Point Subtraits_
 
+> [!WARNING]
 > The important part here is that the subraits **don't** inherit the functions or methods from the supertrait. Every type that implements the subtrait **must** implement the functions of the supertrait.
-{: .prompt-warning }
 
 What this means in Rust code is the following:
 
@@ -399,7 +392,7 @@ Because the type **must** implement the supertrait functions of those subtraits 
 - Type implementation 
 
 
-![Supertrait, Subtrait and Type](supertrait-subtrait-tuple-impl.png){: w="672" h="804"}
+![Supertrait, Subtrait and Type](../../assets/images/rust-generics-traits/supertrait-subtrait-tuple-impl.png)
 _Type implements supertrait functions, there is no inheritance in Rust_
 
 For example, defining the `ones()` function -which returns a Vector or Point with '1' value in all its coordinates- in the `Tuple<P>` supertrait scope **forces** the implementation of that function in both `Point<P>` and `Vector<P>` and all of their non-generic implementations like `impl Tuple<i64> for Point3<i64>`:

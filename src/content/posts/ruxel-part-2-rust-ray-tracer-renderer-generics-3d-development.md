@@ -1,19 +1,13 @@
 ---
-title: Ruxel - Building a Ray Tracer with Rust Part 2
-author: rsdlt
-date: 2023-03-10 06:20:00 +0800
-categories: [Rust, Ray Tracer]
-tags: [rust, 3D, ray tracer, render, rendering, struct, enum, trait, generics]
-pin:
-math: true
-mermaid: true
-img_path: /assets/img/ruxel-ray-tracer-renderer-rust/ 
-image:
-  path: sebastian-svenson-d2w-_1LJioQ-unsplash.jpg 
-  width: 980 
-  height: 551 
-  alt: Photo by Sebastian Svenson via Unsplash 
+title: "Ruxel - Building a Ray Tracer with Rust Part 2"
+pubDatetime: 2023-03-10T06:20:00+08:00
+description: "Part 2 of building Ruxel, a ray tracer in Rust: a generics refactor, the canvas and matrices."
+tags: ["rust", "ray tracer", "3d", "render", "rendering", "struct", "enum", "trait", "generics"]
+ogImage: "../../assets/images/ruxel-ray-tracer-renderer-rust/sebastian-svenson-d2w-_1LJioQ-unsplash.jpg"
+draft: true
 ---
+
+![Photo by Sebastian Svenson via Unsplash](../../assets/images/ruxel-ray-tracer-renderer-rust/sebastian-svenson-d2w-_1LJioQ-unsplash.jpg)
 
 This post is **Part 2** in a [series] to share my journey in developing [Ruxel], a simple Ray Tracer and 3D Renderer written in [Rust], from scratch.
 

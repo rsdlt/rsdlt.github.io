@@ -1,22 +1,15 @@
 ---
-title: Implementing the Display Trait on a Generic Array using Newtype Pattern  
-author: rsdlt
-date: 2022-09-17 18:15:00 +0800
-categories: [Rust, Traits]
-tags: [rust, trait, generics, newtype, array, display, const]
-pin:
-math: true
-mermaid: true
-img_path: /assets/img/newtype-pattern-array-generics-display-trait/ 
-image:
-  path: faris-mohammed-PQinRWK1TgU-unsplash.jpg
-  width: 1200 
-  height: 606 
-  alt: Photo by Faris Mohammed via Unsplash 
+title: "Implementing the Display Trait on a Generic Array using Newtype Pattern"
+pubDatetime: 2022-09-17T18:15:00+08:00
+description: "How to implement the Display trait on a generic array in Rust, working around the orphan rule with the newtype pattern and const generics."
+tags: ["rust", "traits", "trait", "generics", "newtype", "array", "display", "const"]
+ogImage: "../../assets/images/newtype-pattern-array-generics-display-trait/faris-mohammed-PQinRWK1TgU-unsplash.jpg"
 ---
 
+![Photo by Faris Mohammed via Unsplash](../../assets/images/newtype-pattern-array-generics-display-trait/faris-mohammed-PQinRWK1TgU-unsplash.jpg)
+
+> [!INFO]
 > **Edit:** In the original post I said that the *PartialEq* trait bound was required in the generic *Display* function implementation; however, if the last element of the array is the same as its predecessor then the function will not print properly. Thanks to [korrat] for letting me know and for the recommendation to use *std::ptr::eq* instead.  
-{: .prompt-info }
 
 Probably one of the first things that someone does when learning a new programming language is to implement the famous `"Hello, world!"` message, which in the case of [Rust] comes with the boilerplate code via the `cargo new` command:
 

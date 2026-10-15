@@ -1,12 +1,8 @@
 ---
-title: Ruxel - Building a Ray Tracer with Rust (Prelude)  
-author: rsdlt
-date: 2022-08-10 09:35:00 +0800
-categories: [Rust, Ray Tracer]
-tags: [rust, ray tracer, 3D, rendering]
-pin:
-math: true
-mermaid: true
+title: "Ruxel - Building a Ray Tracer with Rust (Prelude)"
+pubDatetime: 2022-08-10T09:35:00+08:00
+description: "Introducing Ruxel, a ray tracer and 3D renderer I'm building from scratch in Rust, why I chose it as a project, and my goals for version 0.1.0."
+tags: ["rust", "ray tracer", "3d", "rendering"]
 ---
 
 As far back as I can remember I have always been fascinated by **3D graphics**. And building a **Ray Tracer and Renderer** seems like a fantastic project to sharpen my skills with Rust. 

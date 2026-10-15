@@ -1,24 +1,17 @@
 ---
-title: Building a Real-Time Web Cipher with Rust, Sycamore and Trunk
-author: rsdlt
-date: 2022-09-28 01:00:00 +0800
-categories: [Rust, Wasm]
-tags: [rust, array, wasm, iterators, webassembly, sycamore, trunk]
-pin:
-math: false 
-mermaid: false
-img_path: /assets/img/vigenere-cypher-iterators/ 
-image:
-  path: 2022-09-25 15-48.gif 
-  width: 885 
-  height: 334 
-  alt: WASM Vigenére Cipher 
+title: "Building a Real-Time Web Cipher with Rust, Sycamore and Trunk"
+pubDatetime: 2022-09-28T01:00:00+08:00
+description: "Building a real-time Vigenère cipher web app in Rust with Sycamore, Trunk and WebAssembly, without writing a single line of JavaScript."
+tags: ["rust", "wasm", "array", "iterators", "webassembly", "sycamore", "trunk"]
+ogImage: "../../assets/images/vigenere-cypher-iterators/2022-09-25-15-48.gif"
 ---
+
+![WASM Vigenére Cipher](../../assets/images/vigenere-cypher-iterators/2022-09-25-15-48.gif)
 
 > Check the [demo] and the [GitHub] repo.
 
+> [!INFO]
 > **Edit:** Since the original post some readers brought to my attention a bug that yielded incorrect decoding. This is now fixed in release [v0.1.2]. Thanks to [Martin Kavík] and others for letting me know. I also added support to properly display multiple continuous space and new line chars in the decoded text in [v0.1.3]. You can check the details in the [updates below].
-{: .prompt-info }
 
 Some days ago I came across Tim McNamara's [Rust Code Challenges], a great course by the way, where the final challenge is to develop a [Vigenère cipher], which according to Wikipedia resisted all attempts to break it for 310 years.
 
@@ -96,7 +89,7 @@ This is a very powerful triad.
 
 For a clear perspective, this is how all the pieces fit together:
 
-![Vigenère cipher solution diagram](general-solution-diagram.png){: width="793" height="324" }
+![Vigenère cipher solution diagram](../../assets/images/vigenere-cypher-iterators/general-solution-diagram.png)
 _Vigenére cipher general solution diagram_
 
 - The Sycamore library is like any other crate imported via `Cargo.toml`.
@@ -242,7 +235,7 @@ With this minimum of scaffolding we can now call Trunk with `trunk serve --open`
 
 Trunk spawns a web server and opens the browser window to a fully reactive application written in Rust:
 
-![boilerplate reactive web app in Rust](first-reactive-web.gif){: width="665" height="253" }
+![boilerplate reactive web app in Rust](../../assets/images/vigenere-cypher-iterators/first-reactive-web.gif)
 _Boilerplate Reactive Web App in Rust with Sycamore and Trunk_
 
 And looking closely at the output from Trunk in the `/dist/` directory:
@@ -714,10 +707,10 @@ And we can include a `CSS` library, in this case [Water.css], and a icon of [Fer
 
 When serving with Trunk we see the results in the browser:
 
-![Vigenère cipher with logic and style](demo-1.gif){: width="824" height="328" }
+![Vigenère cipher with logic and style](../../assets/images/vigenere-cypher-iterators/demo-1.gif)
 _Vigenére cipher working real-time_
 
-![Vigenère cipher error handling](demo-2.gif){: width="824" height="328" }
+![Vigenère cipher error handling](../../assets/images/vigenere-cypher-iterators/demo-2.gif)
 _Vigenére cipher error handling_
 
 ## Final optimizations
@@ -781,7 +774,7 @@ The full web application, including the icon of Ferris the crab, is less than 10
 
 And the result is:
 
-![Vigenère cipher complete](demo-3.gif){: width="912" height="555" }
+![Vigenère cipher complete](../../assets/images/vigenere-cypher-iterators/demo-3.gif)
 _Vigenére cipher complete_
 
 I definitely look forward to implementing other Rust projects with [Sycamore] + [Trunk] + [WebAssembly] in the future.
@@ -865,7 +858,7 @@ view! { cx,
 
 After applying these changes this is the result:
 
-![Vigenère cipher properly showing spaces](demo-4.gif){: width="837" height="518" }
+![Vigenère cipher properly showing spaces](../../assets/images/vigenere-cypher-iterators/demo-4.gif)
 _Vigenére cipher with better space char and new line display_
 
 ---

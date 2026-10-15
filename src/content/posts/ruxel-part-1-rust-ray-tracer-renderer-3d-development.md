@@ -1,19 +1,12 @@
 ---
-title: Ruxel - Building a Ray Tracer with Rust Part 1
-author: rsdlt
-date: 2022-08-24 22:20:00 +0800
-categories: [Rust, Ray Tracer]
-tags: [rust, 3D, ray tracer, render, rendering, struct, enum, trait, neovim]
-pin:
-math: true
-mermaid: true
-img_path: /assets/img/ruxel-ray-tracer-renderer-rust/ 
-image:
-  path: rohit-choudhari-puy-FW4fOJc-unsplash.jpg
-  width: 1920 
-  height: 1184 
-  alt: Photo by Rohit Choudhari via Unsplash 
+title: "Ruxel - Building a Ray Tracer with Rust Part 1"
+pubDatetime: 2022-08-24T22:20:00+08:00
+description: "Part 1 of building Ruxel, a ray tracer in Rust: high-level architecture, project scaffolding, and the vector and point types."
+tags: ["rust", "ray tracer", "3d", "render", "rendering", "struct", "enum", "trait", "neovim"]
+ogImage: "../../assets/images/ruxel-ray-tracer-renderer-rust/rohit-choudhari-puy-FW4fOJc-unsplash.jpg"
 ---
+
+![Photo by Rohit Choudhari via Unsplash](../../assets/images/ruxel-ray-tracer-renderer-rust/rohit-choudhari-puy-FW4fOJc-unsplash.jpg)
 
 This post is **Part 1** in a series to share my journey in developing [Ruxel], a simple Ray Tracer and 3D Renderer written in [Rust], from scratch.
 
@@ -31,7 +24,7 @@ The long-term objective is that `Ruxel` will become a big project, and surely it
 
 The following diagram presents a high-level view of the architecture of the application, at least for `v.0.1.0`:
 
-![Ruxel - High-level architecture diagram](mermaid-diagram-2022-08-24-220253.png){: .shadow width="627" height="437" style="max-width: 90%" }
+![Ruxel - High-level architecture diagram](../../assets/images/ruxel-ray-tracer-renderer-rust/mermaid-diagram-2022-08-24-220253.png)
 _Ruxel high-level architecture diagram - made with https://mermaid.live_
 
 <!---->
@@ -108,8 +101,8 @@ mkdir src/picture
 -- other commands
 ```
 
+> [!TIP]
 > If you use Neovim, you can execute shell commands in Neovim's command line by prepending a `!` before the shell commands, for example: `:!mkdir geometry` or `:!touch vector.rs`.
-{: .prompt-tip }
 
 The initial project structure is the following:
 
@@ -637,8 +630,8 @@ The [Rust API Guidelines] offer an extensive explanation of the recommendations 
 
 One of the key objectives of this project is to abide to the standards as much as possible. 
 
+> [!INFO]
 > As the project evolves, more common traits will likely be implemented as needed, and only if it makes sense to do so.
-{: .prompt-info }
 
 For starters, these are the common traits that are implemented at this stage for the `Vector3` and `Point3` types:
 

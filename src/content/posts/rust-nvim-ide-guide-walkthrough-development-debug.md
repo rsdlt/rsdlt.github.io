@@ -1,22 +1,15 @@
 ---
-title: Rust and Neovim - A Thorough Guide and Walkthrough
-author: rsdlt
-date: 2022-08-15 17:45:00 +0800
-categories: [Rust, Neovim]
-tags: [rust, ide, neovim, vimspector, rust-tools, rust-analyzer, debugger, lsp, development, environment, walktrhough, guide]
-pin:
-math: true
-mermaid: true
-img_path: /assets/img/nvim-rust-development/ 
-image:
-    path: rsdlt-rust-ide-1.png
-    width: 2329
-    height: 1215
-    alt: My Rust development environment with Neovim  
+title: "Rust and Neovim - A Thorough Guide and Walkthrough"
+pubDatetime: 2022-08-15T17:45:00+08:00
+description: "A detailed walkthrough of how I set up my Rust development environment in Neovim, with rust-analyzer, rust-tools, Tree-sitter and Vimspector debugging."
+tags: ["rust", "neovim", "ide", "vimspector", "rust-tools", "rust-analyzer", "debugger", "lsp", "development", "environment", "walkthrough", "guide"]
+ogImage: "../../assets/images/nvim-rust-development/rsdlt-rust-ide-1.png"
 ---
 
+![My Rust development environment with Neovim](../../assets/images/nvim-rust-development/rsdlt-rust-ide-1.png)
+
+> [!INFO]
 > **Edit:** Some readers mentioned an issue with the example Lua code used to configure the [simrat39/rust-tools.nvim] plugin; that configuration code has been updated with the [example configuration](https://github.com/simrat39/rust-tools.nvim#setup) recommended in the plugin page as of the date of this edit. Thanks to [Nazar Toakarak](https://github.com/Tokarak) for letting me know. <br />Readers have also asked me about the link to my latest Neovim config files, you can find them [here](https://github.com/rsdlt/nvim-config-files).
-{: .prompt-info }
 
 
 This post is a detailed explanation and walkthrough of how I set up my Rust development environment and workflow with Neovim.
@@ -99,10 +92,10 @@ Here are a couple screenshots using my current setup:
 - [XFCE] desktop environment.
 - [Alacritty] terminal.
 
-![Rust development with Neovim and Vimspector](rsdlt-rust-ide-2.png){: .shadow width="2329" height="1215" style="max-width: 90%" }
+![Rust development with Neovim and Vimspector](../../assets/images/nvim-rust-development/rsdlt-rust-ide-2.png)
 _Rust development with Neovim and Vimspector_
 
-![Rust development with Neovim and voldikss/vim-floaterm float terminal plugin](rsdlt-rust-ide-3.png){: .shadow width="2329" height="1215" style="max-width: 90%" }
+![Rust development with Neovim and voldikss/vim-floaterm float terminal plugin](../../assets/images/nvim-rust-development/rsdlt-rust-ide-3.png)
 _Rust development with Neovim and [voldikss/vim-floaterm] float terminal plugin_
  
 
@@ -111,7 +104,7 @@ _Rust development with Neovim and [voldikss/vim-floaterm] float terminal plugin_
 To make things more digestible, here the major activities that what we are going to do:
 
 
-![Rust and Neovim setup diagram - made with mermaid-hs](mermaid-diagram-2022-08-15-182414.png){: .shadow width="650" height="465" style="max-width: 90%" }
+![Rust and Neovim setup diagram - made with mermaid-hs](../../assets/images/nvim-rust-development/mermaid-diagram-2022-08-15-182414.png)
 _Rust and Neovim Set Up Diagram - made with https://mermaid.live_
  
 
@@ -178,8 +171,8 @@ require("mason-lspconfig").setup()
 Thanks to [Eric Smith](https://github.com/paytonrules) for suggesting including Mason's setup in 
 this guide.
 
+> [!TIP]
 > I could use other package managers to install plugins or LSPs, however, I prefer Packer and Mason because they are written entirely in Lua, are getting traction within the Neovim developer community, and they work great.
-{: .prompt-tip }
 
 Once Mason is installed and setup, we can use it to install and manage rust-analyzer and CodeLLDB:
 
@@ -187,7 +180,7 @@ On Neovim command mode we input `:MasonInstall rust-analyzer codelldb`.
 
 When Manson finishes, we can check with `:Mason` that we have rust-analyzer and CodeLLDB installed.
 
-![Installing rust-analyzer and CodeLLDB with Mason](rsdlt-rust-ide-4.png){: .shadow width="890" height="281" style="max-width: 90%" }
+![Installing rust-analyzer and CodeLLDB with Mason](../../assets/images/nvim-rust-development/rsdlt-rust-ide-4.png)
 _Mason installing rust-analyzer and CodeLLDB for Neovim_
 
 
@@ -395,15 +388,15 @@ cmp.setup({
 ```
 With this setup we are now able to have real-time completion capabilities sourcing from `rust-analyzer` and we can review the associated documentation that pops up:
 
-![rust-analyzer sourced for real-time completion in Neovim](rsdlt-rust-ide-5.png){: .shadow width="1665" height="804" style="max-width: 90%" }
+![rust-analyzer sourced for real-time completion in Neovim](../../assets/images/nvim-rust-development/rsdlt-rust-ide-5.png)
 _Rust real-time completion in Neovim_
 
 ### 4. Install Tree-sitter and set it up with the tree-sitter-rust parser
 
 [Tree-sitter] is a fantastic parser generation and incremental parsing library, that supports Rust language bindings and has an available parser Rust [tree-sitter-rust].
 
+> [!WARNING]
 > Neovim's support of Tree-sitter is, at the time of this post, [experimental](https://neovim.io/doc/treesitter/) and should be treated as such; however, I have found no issues so far with my setup. 
-{: .prompt-warning }
 
 First we need to insall the [nvim-treesitter/nvim-treesitter] plugin:
 
@@ -479,7 +472,7 @@ vim.wo.foldexpr = 'nvim_treesitter#foldexpr()'
 
 And here is the result of my Rust code being folded in Neovim using Tree-sitter:
 
-![Rust code folding in Neovim using Tree-sitter](rsdlt-rust-ide-6.png){: .shadow width="625" height="663" style="max-width: 90%" }
+![Rust code folding in Neovim using Tree-sitter](../../assets/images/nvim-rust-development/rsdlt-rust-ide-6.png)
 _Rust code folding in Neovim using Tree-sitter_
 
 
@@ -488,8 +481,8 @@ Okay, now comes one of the most important features of any IDE: having a debugger
 
 As of today, my preferred method is to use the [Vimspector] plugin with [CodeLLDB].
 
+> [!TIP]
 > There is also the alternative to use [nvim-DAP] instead of Vimspector. It looks like a fantastic initiative that is getting traction, but I still have not enabled it in my workflow. Definitely worth a look!
-{: .prompt-tip }
 
 Remember that we already installed CodeLLDB via Mason, so now we just need to install the Vimspector plugin:
 
@@ -556,7 +549,7 @@ And finally, the tricky part:
 
 And, if everything went well we should be greeted by a new debugging session of our Rust code in Neovim. 
 
-![Rust debugging in Neovim with Vimspector and CodeLLDB](rsdlt-rust-ide-8.png){: .shadow width="2079" height="1080" style="max-width: 90%" }
+![Rust debugging in Neovim with Vimspector and CodeLLDB](../../assets/images/nvim-rust-development/rsdlt-rust-ide-8.png)
 _Rust debugging in Neovim with Vimspector and CodeLLDB_
 
 If we want to debug Rust Tests we need to:
@@ -595,7 +588,7 @@ test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; fini
 ```
 And again, if everything is properly configured we are greeted with a debugging session of a Rust Test:
 
-![Rust debugging a test in Neovim with Vimspector and CodeLLDB](rsdlt-rust-ide-9.png){: .shadow width="2079" height="1080" style="max-width: 90%" }
+![Rust debugging a test in Neovim with Vimspector and CodeLLDB](../../assets/images/nvim-rust-development/rsdlt-rust-ide-9.png)
 _Debugging a Rust Test in Neovim with Vimspector and CodeLLDB_
 
 
@@ -653,7 +646,7 @@ I mainly use four plugins to keep my project nice and tidy:
 
 And of course, with just one keystroke we can toggle on / off each of these features really fast...
 
-![Rust IDE-like features in Neovim](rsdlt-rust-ide-10.png){: .shadow width="2079" height="1080" style="max-width: 90%" }
+![Rust IDE-like features in Neovim](../../assets/images/nvim-rust-development/rsdlt-rust-ide-10.png)
 _Rust in Neovim with File Explorer, Tagbar, TODOs and Trouble_
 
 ## Better Coding Experience
