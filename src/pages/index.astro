@@ -1,6 +1,8 @@
 ---
 import { getCollection } from "astro:content";
 import { getRelativeLocaleUrl } from "astro:i18n";
+import { Image } from "astro:assets";
+import profilePhoto from "@/assets/images/rodrigo.jpeg";
 import IconRss from "@/assets/icons/IconRss.svg";
 import IconArrowRight from "@/assets/icons/IconArrowRight.svg";
 import Layout from "@/layouts/Layout.astro";
@@ -34,23 +36,35 @@ const homePath = getRelativeLocaleUrl(locale, "");
     class="app-layout"
   >
     <section id="hero" class="border-border border-b pt-8 pb-6">
-      <h1 class="my-4 inline-block text-4xl font-bold sm:my-8 sm:text-5xl">
-        Rodrigo Santiago
-      </h1>
-      <a
-        target="_blank"
-        href={`${import.meta.env.BASE_URL.replace(/\/?$/, "/")}rss.xml`}
-        class="inline-block"
-        aria-label="RSS Feed"
-        title="RSS Feed"
-      >
-        <IconRss
-          width={20}
-          height={20}
-          class="stroke-accent scale-125 stroke-3 rtl:-rotate-90"
+      <div class="my-4 flex items-center gap-4 sm:my-8 sm:gap-6">
+        <Image
+          src={profilePhoto}
+          alt="Rodrigo Santiago"
+          width={192}
+          height={192}
+          loading="eager"
+          class="border-accent size-20 shrink-0 rounded-full border-2 sm:size-24"
         />
-        <span class="sr-only">RSS Feed</span>
-      </a>
+        <div>
+          <h1 class="inline-block text-4xl font-bold sm:text-5xl">
+            Rodrigo Santiago
+          </h1>
+          <a
+            target="_blank"
+            href={`${import.meta.env.BASE_URL.replace(/\/?$/, "/")}rss.xml`}
+            class="inline-block"
+            aria-label="RSS Feed"
+            title="RSS Feed"
+          >
+            <IconRss
+              width={20}
+              height={20}
+              class="stroke-accent scale-125 stroke-3 rtl:-rotate-90"
+            />
+            <span class="sr-only">RSS Feed</span>
+          </a>
+        </div>
+      </div>
 
       <p>
         I'm a product leader who builds. I've spent nearly 15 years taking
