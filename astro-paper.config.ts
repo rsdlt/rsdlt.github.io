@@ -29,10 +29,8 @@ export default defineAstroPaperConfig({
   socials: [
     { name: "github", url: "https://github.com/rsdlt" },
     { name: "linkedin", url: "https://www.linkedin.com/in/rsdlt" },
-    { name: "mail", url: "mailto:rsdlt@pm.me" },
   ],
   shareLinks: [
     { name: "x", url: "https://x.com/intent/post?url=" },
-    { name: "mail", url: "mailto:?subject=See%20this%20post&body=" },
   ],
 });
