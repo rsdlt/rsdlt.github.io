@@ -74,7 +74,8 @@ const bioLinkClass =
       <p>
         I'm a product leader who builds. I've spent nearly 15 years taking
         digital products from strategy to launch in fintech and telecom, and I
-        write the code myself.
+        still ship production code, now with AI coding agents working inside the
+        guard rails I'd expect from a professional engineering team.
       </p>
 
       <h2 class="mt-6 mb-2 text-lg font-semibold">Hands-on engineering</h2>
@@ -86,11 +87,31 @@ const bioLinkClass =
           class={bioLinkClass}>Foambyte®</a
         >, a production-management platform for craft brewers, with my brother
         Diego, a brewmaster with 12+ years of experience who leads the product
-        as CPO. I'm the CEO and the only developer: I designed and built the
+        as CPO. I'm the CEO and lead the engineering: I designed and built the
         entire platform (architecture, frontend, backend, mobile and
         infrastructure) using React, TypeScript, Hono, TanStack, Tailwind,
         CapacitorJS, and edge infrastructure on Cloudflare and PlanetScale
         Postgres. Together we've grown it to 100+ users in 3 countries.
+      </p>
+
+      <h2 class="mt-6 mb-2 text-lg font-semibold">How I build</h2>
+      <p>
+        I write software with AI coding agents (Claude Code) the way I'd run an
+        engineering team. I own the architecture and every decision, and the
+        agents work from written conventions and project-specific skills. I
+        review every diff myself before it's committed, and I run security
+        audits on the codebase, turning their findings into fixes and
+        regression tests. Nothing ships without passing type checks, the
+        automated test suite and a license check in the deploy gate, then
+        verification on staging. Database migrations and production releases
+        stay in my hands.
+        <a
+          href={getRelativeLocaleUrl(
+            locale,
+            "posts/claude-code-production-saas-ai-coding-guardrails",
+          )}
+          class={bioLinkClass}>More on how I work with Claude Code</a
+        >.
       </p>
 
       <h2 class="mt-6 mb-2 text-lg font-semibold">
