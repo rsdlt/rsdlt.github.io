@@ -39,58 +39,29 @@ For context, here's what Vite+ would be replacing:
 
 - **Frontend:** React 19 + Vite with the React Compiler running as a [Babel plugin](/posts/react-compiler-vite-react-19-production-app/), plus ESLint and its React Compiler rule.
 - **API:** Hono on Cloudflare Workers, built and deployed with Wrangler.
-- **Shared code:** an internal package, `@repo/config-foambyte`, built with rslib.
+- **Shared code:** an internal workspace package built with rslib.
 - **Tests:** Vitest for [unit tests](/posts/unit-testing-brewing-calculators-vitest-ibu-srm-carbonation/) and [integration tests against PGlite](/posts/integration-testing-cloudflare-workers-postgres-pglite-vitest/).
 - **Orchestration:** pnpm workspaces and [Turborepo](/posts/pnpm-turborepo-monorepo-shared-package-lessons/), with `dependsOn: ["^build"]` encoding the build graph.
 - **Versions:** mise pins Node and pnpm.
 
 That's at least seven tools with seven configs, and every one of them works. That matters for what follows.
 
-## The pros
+## Pros and cons
 
-**1. One config and one upgrade path.** Today a Vite major means checking that Vitest, the React plugin, ESLint plugins and Turborepo all still agree. Vite+ ships those as one tested set, and `vp toolchain` tells you exactly what you're running. For a small team, fewer moving parts to keep in sync is the main benefit.
-
-**2. Dropping Babel from the frontend build.** Our React Compiler setup is the one place where we knowingly accepted a slower pipeline: passing a Babel plugin makes `@vitejs/plugin-react` run Babel over every component. A native compiler in Oxc removes that trade-off.
-
-**3. Much faster checks, in CI and for agents.** Linting and formatting run on every change. Most of Foambyte's code is written with [Claude Code](/posts/claude-code-production-saas-ai-coding-guardrails/), and the agent runs those checks many times per change. A check loop that drops from seconds to well under a second compounds across a day of work. `vp staged` also gives us a fast pre-commit gate without adding husky and lint-staged.
-
-**4. The tools we already use, just packaged.** This isn't a jump to an unfamiliar stack. Vite and Vitest stay Vite and Vitest; our 660+ tests shouldn't need to change. The risk is concentrated in the parts that are new to us: Oxlint, Oxfmt and Vite Task.
-
-**5. Fewer devDependencies to audit.** One `vite-plus` package in place of `vite`, `vitest`, `eslint` and its plugins, a formatter and `turbo` means a smaller surface for supply-chain review and fewer Dependabot PRs.
-
-## The cons
-
-**1. Turborepo is solved, and remote caching isn't there yet.** Our Turborepo setup took [two attempts to get right](/posts/pnpm-turborepo-monorepo-shared-package-lessons/), and it works. `vp run` caches locally, but remote caching is still on the roadmap. Replacing a working, well-understood task graph with a 1.0 runner is the riskiest part of a migration for the smallest gain.
-
-**2. Lint rule parity has to be proven, not assumed.** Our ESLint config isn't just style. The React Compiler rule is an error because it's how we know which components the compiler can optimize. Before switching, we need to confirm Oxlint covers every rule we actually rely on, or keep ESLint alongside it, which defeats part of the point.
-
-**3. Not everything is a Vite project.** The API builds with Wrangler and its own bundler, and the Workers runtime has its own testing considerations. Vite+ can lint, format, type-check and test it, but it won't replace Wrangler. The mobile builds go through Capacitor and Xcode/Android Studio. "One toolchain" covers less of our pipeline than the pitch suggests.
-
-**4. Bundling means coupling.** Today we can upgrade Vitest without touching the formatter. With Vite+, every tool moves on one release train. That's a pro when the set is well tested and a con when one bundled tool has a regression we can't pin around.
-
-**5. Overlap with mise.** `vp env` manages Node, but mise already pins Node and pnpm for this repo and other tools in my setup. Two version managers for the same runtime is a recipe for "works on my machine." We'd keep mise and ignore `vp env`, or move fully, but not both.
-
-**6. Vendor concentration.** Vite+ is MIT licensed, so lock-in is limited in practice. Still, the bundler, linter, formatter, test runner and task runner would all come from one company, and the announcement page notes that VoidZero is joining Cloudflare. Foambyte already runs on Cloudflare, so that's probably good for Workers support. It's also a reason to watch where the roadmap goes.
-
-## How we're evaluating it
-
-Rather than a big-bang `vp migrate`, the plan is to adopt Vite+ in slices, each one reversible on its own:
-
-1. **Run `vp check` next to our current ESLint setup in CI** for a couple of weeks and compare findings. If Oxlint misses rules we depend on, we'll know before anything is removed.
-2. **Move the shared package** from rslib to `vp pack`. It's small, isolated and easy to verify: the apps either import the same `dist/` or they don't.
-3. **Switch the frontend to the native React Compiler** and compare build times and the compiled output on a few components.
-4. **Leave Turborepo alone** until `vp run` has remote caching and has been in the wild for a few more months.
-
-Each step has a clear signal: same findings, same output, faster. If a step doesn't deliver, it gets rolled back and the rest of the toolchain stays as it is.
+| Pros | Cons |
+| ---- | ---- |
+| **One config, one upgrade path.** Vite, Vitest, linting and the task runner ship as one tested set. | **Turborepo already works.** `vp run` has no remote caching yet, so replacing it is high risk for little gain. |
+| **No more Babel for the React Compiler.** Oxc compiles it natively, so the frontend build gets faster. | **Lint parity is unproven.** Oxlint has to cover the ESLint rules we rely on, including the React Compiler rule. |
+| **Much faster checks.** Our AI coding agents run lint and format many times per change, so the speedup adds up. | **Not everything is Vite.** Wrangler still builds the API, and Capacitor still builds the mobile apps. |
+| **Familiar tools.** Vite and Vitest stay the same, so our 660+ tests shouldn't need changes. | **Coupled releases.** Every tool upgrades together, so we can't pin around one tool's regression. |
+| **Fewer dependencies.** One `vite-plus` package replaces several, which means less supply-chain review. | **Overlap with mise.** `vp env` and mise would both manage Node. |
+| | **Vendor concentration.** The whole toolchain comes from one company, which is now joining Cloudflare. |
 
 ## Takeaways
 
 - **Vite+ 1.0 is a real toolchain, not a wrapper:** one command and one config over Vite 8, Vitest, Oxlint, Oxfmt, tsdown and a caching task runner, all MIT licensed.
 - **The strongest case is speed and fewer moving parts,** especially for teams that run checks constantly, like ones working with AI coding agents.
 - **The weakest case is replacing things that already work,** like a tuned Turborepo graph, before the roadmap catches up.
-- **Adopt it in slices.** Start with checks and small packages, measure, and keep each step reversible.
-
-I'll follow up with numbers once the first two steps are done.
 
 ---
 
