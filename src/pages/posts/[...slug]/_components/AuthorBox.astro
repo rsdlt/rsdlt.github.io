@@ -1,0 +1,43 @@
+---
+import { Image } from "astro:assets";
+import { getRelativeLocaleUrl } from "astro:i18n";
+import profilePhoto from "@/assets/images/rodrigo.jpeg";
+import Socials from "@/components/Socials.astro";
+import config from "@/config";
+
+const locale = Astro.currentLocale ?? config.site.lang;
+const linkClass =
+  "hover:text-accent underline decoration-dashed underline-offset-4";
+---
+
+<aside
+  aria-label="About the author"
+  class="border-border flex flex-col gap-4 rounded-md border p-4 sm:flex-row sm:p-6"
+>
+  <Image
+    src={profilePhoto}
+    alt={config.site.author}
+    width={128}
+    height={128}
+    class="border-accent size-16 shrink-0 rounded-full border-2"
+  />
+  <div>
+    <p class="text-lg font-semibold">
+      <a href={getRelativeLocaleUrl(locale, "")} class="hover:text-accent"
+        >{config.site.author}</a
+      >
+    </p>
+    <p class="mt-2">
+      Product leader who builds. Co-founder and CEO of <a
+        href="https://foambyte.com"
+        target="_blank"
+        rel="noopener"
+        class={linkClass}>Foambyte</a
+      >, where I designed and built the entire platform, after nearly 15 years
+      taking digital products from strategy to launch in fintech and telecom.
+    </p>
+    <div class="-ms-1 mt-2">
+      <Socials />
+    </div>
+  </div>
+</aside>
