@@ -14,6 +14,7 @@ import config from "@/config";
 import { useTranslations } from "@/i18n";
 import Layout from "@/layouts/Layout.astro";
 import { getSortedPosts } from "@/utils/getSortedPosts";
+import { personSchema } from "@/utils/personSchema";
 
 const { socials, posts: postsConfig } = config;
 
@@ -28,11 +29,26 @@ const foambytePostCount = sortedPosts.filter(({ data }) =>
 	data.tags.includes("foambyte"),
 ).length;
 const homePath = getRelativeLocaleUrl(locale, "");
+const profileSchema = {
+	"@context": "https://schema.org",
+	"@type": "ProfilePage",
+	url: config.site.url,
+	mainEntity: {
+		...personSchema,
+		image: new URL(profilePhoto.src, Astro.site).href,
+	},
+};
 const bioLinkClass =
 	"hover:text-accent underline decoration-dashed underline-offset-4";
 ---
 
 <Layout>
+  <script
+    slot="head"
+    type="application/ld+json"
+    is:inline
+    set:html={JSON.stringify(profileSchema)}
+  />
   <Header />
   <main
     id="main-content"

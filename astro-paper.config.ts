@@ -5,7 +5,7 @@ export default defineAstroPaperConfig({
     url: "https://rsdlt.dev/",
     title: "rsdlt.dev",
     description:
-      "My personal blog where I share my projects and ideas about the technology topics I'm passionate about.",
+      "Rodrigo Santiago, product leader and Foambyte co-founder, on building production software: React, Hono, Cloudflare Workers, Postgres, Claude Code and Rust.",
     author: "Rodrigo Santiago",
     profile: "https://github.com/rsdlt",
     ogImage: "default-og.jpg",

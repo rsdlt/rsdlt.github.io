@@ -1,6 +1,7 @@
 ---
 import Layout from "./Layout.astro";
 import config from "@/config";
+import { personSchema } from "@/utils/personSchema";
 import "katex/dist/katex.min.css";
 
 type Props = {
@@ -10,27 +11,42 @@ type Props = {
   canonicalURL?: string;
   pubDatetime?: Date;
   modDatetime?: Date | null;
+  tags?: string[];
+  /** Post title without the site suffix, for the JSON-LD headline */
+  headline?: string;
 };
 
 const { site } = config;
 
-const { title, description, ogImage, canonicalURL, pubDatetime, modDatetime } =
-  Astro.props;
+const {
+  title,
+  description,
+  ogImage,
+  canonicalURL,
+  pubDatetime,
+  modDatetime,
+  tags,
+  headline,
+} = Astro.props;
+
+const pageURL = canonicalURL ?? new URL(Astro.url.pathname, Astro.site).href;
+const lastModified = modDatetime ?? pubDatetime;
 
 const structuredData = {
   "@context": "https://schema.org",
   "@type": "BlogPosting",
-  headline: title ?? site.title,
-  image: ogImage,
+  headline: headline ?? title ?? site.title,
+  ...(description && { description }),
+  url: pageURL,
+  mainEntityOfPage: { "@type": "WebPage", "@id": pageURL },
+  ...(ogImage && { image: ogImage }),
   ...(pubDatetime && { datePublished: pubDatetime.toISOString() }),
-  ...(modDatetime && { dateModified: modDatetime.toISOString() }),
-  author: [
-    {
-      "@type": "Person",
-      name: site.author,
-      ...(site.profile && { url: site.profile }),
-    },
-  ],
+  ...(lastModified && { dateModified: lastModified.toISOString() }),
+  ...(tags?.length && { keywords: tags.join(", ") }),
+  inLanguage: site.lang,
+  author: [personSchema],
+  publisher: { "@id": personSchema["@id"] },
+  isPartOf: { "@type": "Blog", name: site.title, url: site.url },
 };
 ---
 
