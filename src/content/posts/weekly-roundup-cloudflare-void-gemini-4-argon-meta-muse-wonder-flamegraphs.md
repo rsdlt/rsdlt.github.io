@@ -2,7 +2,7 @@
 title: "Four Things This Week for Solo Builders: Cloudflare Void, Gemini 4 Argon, Meta Muse Wonder and Workers Flamegraphs"
 description: "A builder's notes on this week's AI and web dev news: Cloudflare open-sources Void, Gemini 4 Argon hits the API, Meta ships Muse Wonder, and Workers gets on-demand CPU and memory profiling."
 pubDatetime: 2026-10-17T10:00:00-04:00
-tags: ["weekly roundup", "cloudflare workers", "cloudflare void", "gemini", "meta muse", "ai coding agents", "llms", "foambyte"]
+tags: ["weekly roundup", "cloudflare workers", "cloudflare void", "gemini", "meta muse", "ai coding agents", "llms"]
 ---
 
 Every week I pick a few stories that matter to me as someone who builds software on my own with AI agents. Foambyte runs on Cloudflare Workers with Hono, React and TypeScript, and most of its code today is written with Claude Code, so that's the lens. All sources are primary or major outlets, linked under each item.
