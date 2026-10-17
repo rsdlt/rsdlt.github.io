@@ -1,0 +1,28 @@
+---
+import { getCollection, render } from "astro:content";
+import Layout from "@/layouts/Layout.astro";
+import Header from "@/components/Header.astro";
+import Main from "@/components/Main.astro";
+import Footer from "@/components/Footer.astro";
+import config from "@/config";
+
+// Standalone pages from src/content/pages, such as /terms and /privacy.
+export async function getStaticPaths() {
+  const pages = await getCollection("pages");
+  return pages.map(page => ({ params: { page: page.id }, props: { page } }));
+}
+
+const { page } = Astro.props;
+const { title, description, canonicalURL } = page.data;
+const { Content } = await render(page);
+---
+
+<Layout title={`${title} | ${config.site.title}`} {description} {canonicalURL}>
+  <Header />
+  <Main pageTitle={title} pageDesc={description}>
+    <article class="app-prose max-w-app">
+      <Content />
+    </article>
+  </Main>
+  <Footer />
+</Layout>

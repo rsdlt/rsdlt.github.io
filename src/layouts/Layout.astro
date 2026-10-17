@@ -5,7 +5,7 @@ import { getRelativeLocaleUrl } from "astro:i18n";
 import { resolveDefaultOgImagePath } from "@/utils/resolveDefaultOgImagePath";
 import { getAssetPath } from "@/utils/withBase";
 import config from "@/config";
-import GoogleAnalytics from "@/components/GoogleAnalytics.astro";
+import CloudflareAnalytics from "@/components/CloudflareAnalytics.astro";
 import "@/styles/global.css";
 
 type Props = {
@@ -16,6 +16,9 @@ type Props = {
 };
 
 const { site, features } = config;
+// Cloudflare Web Analytics: cookieless, so no consent banner is needed. The
+// token is public (it ships in the page). Analytics are off while it's empty.
+const CF_ANALYTICS_TOKEN = "";
 // Without the light/dark toggle the site is dark-only.
 const darkOnly = !features.lightAndDarkMode;
 
@@ -120,7 +123,11 @@ const rssHref = getRelativeLocaleUrl(
       })();
     </script>
 
-    {import.meta.env.PROD && <GoogleAnalytics id="G-4YJ2815MJ6" />}
+    {
+      import.meta.env.PROD && CF_ANALYTICS_TOKEN && (
+        <CloudflareAnalytics token={CF_ANALYTICS_TOKEN} />
+      )
+    }
 
     <ClientRouter />
   </head>

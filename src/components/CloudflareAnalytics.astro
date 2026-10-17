@@ -1,0 +1,15 @@
+---
+type Props = {
+  token: string;
+};
+
+const { token } = Astro.props;
+// spa: true reports ClientRouter navigations as page views.
+const beacon = JSON.stringify({ token, spa: true });
+---
+
+<script
+  is:inline
+  defer
+  src="https://static.cloudflareinsights.com/beacon.min.js"
+  data-cf-beacon={beacon}></script>
