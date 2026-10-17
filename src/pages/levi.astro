@@ -1,0 +1,66 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "@/layouts/Layout.astro";
+import Header from "@/components/Header.astro";
+import Breadcrumb from "@/components/Breadcrumb.astro";
+import Main from "@/components/Main.astro";
+import Footer from "@/components/Footer.astro";
+import Card from "@/components/Card.astro";
+import { getSortedPosts } from "@/utils/getSortedPosts";
+import config from "@/config";
+
+const SERIES_TAG = "levi";
+
+const posts = await getCollection("posts");
+// Oldest first: the series reads as the story of the build.
+const seriesPosts = getSortedPosts(posts)
+  .filter(({ data }) => data.tags.includes(SERIES_TAG))
+  .reverse();
+
+const postsByYear = Object.entries(
+  Object.groupBy(seriesPosts, ({ data }) =>
+    String(data.pubDatetime.getFullYear())
+  )
+);
+
+const title = "Building levi";
+const description =
+  "How I built levi, a small and fast git diff viewer in Rust, with Claude Code: from an empty repository to release 0.12.0 in under two days, session by session.";
+---
+
+<Layout title={`${title} | ${config.site.title}`} {description}>
+  <Header />
+
+  <Breadcrumb />
+
+  <Main pageTitle={title} pageDesc={description}>
+    <p>
+      <a
+        href="https://github.com/rsdlt/levi"
+        target="_blank"
+        rel="noopener"
+        class="hover:text-accent underline decoration-dashed underline-offset-4"
+        >levi</a
+      > is a terminal git diff viewer that does one thing: browse the commits on a
+      branch, the files each one touched, and their diffs, with fzf-style search on
+      top. I built it with Claude Code. {seriesPosts.length === 1 ? "This post follows" : `These ${seriesPosts.length} posts follow`}
+      the build in the order it happened: the decisions, the benchmarks, and how the
+      agent and I worked together.
+    </p>
+
+    {
+      postsByYear.map(([year, yearPosts]) => (
+        <section class="mt-10">
+          <h2 class="text-xl font-semibold">{year}</h2>
+          <ul>
+            {yearPosts?.map(data => (
+              <Card variant="h3" {...data} />
+            ))}
+          </ul>
+        </section>
+      ))
+    }
+  </Main>
+
+  <Footer />
+</Layout>

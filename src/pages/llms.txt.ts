@@ -11,7 +11,10 @@ export const GET: APIRoute = async ({ site }) => {
     `- [${data.title}](${new URL(getPostUrl(id, filePath), site).href}): ${data.description}`;
 
   const foambyte = posts.filter(({ data }) => data.tags.includes("foambyte"));
-  const other = posts.filter(({ data }) => !data.tags.includes("foambyte"));
+  const levi = posts.filter(({ data }) => data.tags.includes("levi"));
+  const other = posts.filter(
+    ({ data }) => !data.tags.includes("foambyte") && !data.tags.includes("levi")
+  );
 
   const body = `# ${config.site.title}
 
@@ -23,12 +26,17 @@ Every post is first-hand: it documents a decision made on a real codebase, the a
 
 - [About ${config.site.author}](${site}): Bio, experience and links
 - [Foambyte engineering series](${new URL("foambyte/", site).href}): ${foambyte.length} posts on the architecture behind Foambyte, oldest first
+- [Building levi](${new URL("levi/", site).href}): ${levi.length} posts on building levi, a Rust git diff viewer, with Claude Code
 
 ## Foambyte engineering
 
 ${foambyte.map(link).join("\n")}
 
-## Rust
+## Building levi
+
+${levi.map(link).join("\n")}
+
+## Other posts
 
 ${other.map(link).join("\n")}
 

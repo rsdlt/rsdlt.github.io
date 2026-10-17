@@ -28,6 +28,9 @@ const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
 const foambytePostCount = sortedPosts.filter(({ data }) =>
 	data.tags.includes("foambyte"),
 ).length;
+const leviPostCount = sortedPosts.filter(({ data }) =>
+	data.tags.includes("levi"),
+).length;
 const homePath = getRelativeLocaleUrl(locale, "");
 const profileSchema = {
 	"@context": "https://schema.org",
@@ -162,6 +165,14 @@ const bioLinkClass =
         <a href={getRelativeLocaleUrl(locale, "foambyte")} class={bioLinkClass}
           >Foambyte engineering series</a
         >: {foambytePostCount} posts on the architecture behind the platform.
+      </p>
+
+      <p class="mt-4">
+        Read
+        <a href={getRelativeLocaleUrl(locale, "levi")} class={bioLinkClass}
+          >Building levi</a
+        >: {leviPostCount} {leviPostCount === 1 ? "post" : "posts"} on building a Rust git diff viewer with Claude
+        Code.
       </p>
       {
         socials.length > 0 && (
