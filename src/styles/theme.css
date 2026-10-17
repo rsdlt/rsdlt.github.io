@@ -10,16 +10,19 @@
   --font-app: var(--font-jetbrains-mono);
 }
 
-/* Light theme values */
+/* Light theme values: the Ghostty "0x96f" theme inverted (its foreground
+   becomes the background), with the yellow accent deepened to amber for
+   WCAG AAA text contrast (7.3:1). Code block colors in astro.config.ts
+   assume these backgrounds. */
 :root,
 [data-theme="light"] {
-  --background: #fdfdfd;
-  --foreground: #282728;
-  --accent: #006cac;
-  --accent-foreground: #ffffff;
-  --muted: #e6e6e6;
-  --muted-foreground: #6b7280;
-  --border: #ece9e9;
+  --background: #fcfcfa; /* 0x96f foreground */
+  --foreground: #262427; /* 0x96f background */
+  --accent: #7a4900; /* palette 3, deepened */
+  --accent-foreground: #fcfcfa;
+  --muted: #efeeeb;
+  --muted-foreground: #6b696c;
+  --border: #d9d8d5;
 }
 
 /* Dark theme values, from the Ghostty "0x96f" theme */

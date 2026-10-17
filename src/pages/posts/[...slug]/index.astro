@@ -140,7 +140,7 @@ const ogImage = ogImageUrl
       class:list={[
         "mt-8 w-full",
         "app-prose max-w-app",
-        "prose-pre:bg-(--shiki-light-bg) dark:prose-pre:bg-background",
+        "prose-pre:bg-background",
       ]}
     >
       <Content />
@@ -208,10 +208,13 @@ const ogImage = ogImageUrl
     );
     for (const heading of headings) {
       heading.classList.add("group");
+      const headingText = heading.textContent?.trim() ?? "";
       const link = document.createElement("a");
       link.className =
         "heading-link ms-2 no-underline opacity-75 md:opacity-0 md:group-hover:opacity-100 md:focus:opacity-100";
       link.href = "#" + heading.id;
+      // The visible "#" is hidden from screen readers, so name the link.
+      link.setAttribute("aria-label", `Link to section: ${headingText}`);
 
       const span = document.createElement("span");
       span.ariaHidden = "true";

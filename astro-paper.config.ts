@@ -19,7 +19,7 @@ export default defineAstroPaperConfig({
     scheduledPostMargin: 15 * 60 * 1000,
   },
   features: {
-    lightAndDarkMode: false,
+    lightAndDarkMode: true,
     dynamicOgImage: true,
     showArchives: true,
     showBackButton: true,
@@ -32,5 +32,7 @@ export default defineAstroPaperConfig({
   ],
   shareLinks: [
     { name: "x", url: "https://x.com/intent/post?url=" },
+    { name: "bluesky", url: "https://bsky.app/intent/compose?text=" },
+    { name: "threads", url: "https://www.threads.com/intent/post?text=" },
   ],
 });

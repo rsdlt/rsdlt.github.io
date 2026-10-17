@@ -18,7 +18,10 @@ import {
   transformerNotationHighlight,
   transformerNotationWordHighlight,
 } from "@shikijs/transformers";
+import minLight from "@shikijs/themes/min-light";
+import nightOwl from "@shikijs/themes/night-owl";
 import { transformerFileName } from "./src/utils/transformers/fileName";
+import { accessibleTheme } from "./src/utils/accessibleTheme";
 import config from "./astro-paper.config";
 
 export default defineConfig({
@@ -48,7 +51,12 @@ export default defineConfig({
       rehypePlugins: [rehypeCallouts, rehypeKatex],
     }),
     shikiConfig: {
-      themes: { light: "min-light", dark: "night-owl" },
+      // Code blocks sit on the page background (theme.css), so token colors
+      // are raised to readable contrast against it.
+      themes: {
+        light: accessibleTheme(minLight, "#fcfcfa"),
+        dark: accessibleTheme(nightOwl, "#262427"),
+      },
       defaultColor: false,
       wrap: false,
       transformers: [
