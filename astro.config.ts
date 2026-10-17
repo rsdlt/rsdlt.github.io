@@ -52,9 +52,10 @@ export default defineConfig({
     }),
     shikiConfig: {
       // Code blocks sit on the page background (theme.css), so token colors
-      // are raised to readable contrast against it.
+      // are raised to readable contrast against it. Light gets a higher target
+      // so colors still pass on shaded lines (highlights, diffs, muted).
       themes: {
-        light: accessibleTheme(minLight, "#fcfcfa"),
+        light: accessibleTheme(minLight, "#fcfcfa", 6),
         dark: accessibleTheme(nightOwl, "#262427"),
       },
       defaultColor: false,
