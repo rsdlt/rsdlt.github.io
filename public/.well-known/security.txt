@@ -1,0 +1,6 @@
+# Security contact for rsdlt.dev, a static personal blog.
+# Please report vulnerabilities privately through the contact below.
+Contact: https://www.linkedin.com/in/rsdlt
+Expires: 2027-10-17T00:00:00.000Z
+Preferred-Languages: en, es
+Canonical: https://rsdlt.dev/.well-known/security.txt
