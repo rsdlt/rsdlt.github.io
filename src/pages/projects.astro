@@ -8,26 +8,46 @@ import config from "@/config";
 
 type Project = {
   name: string;
-  description: string;
-  stack: string;
-  links: { label: string; href: string }[];
+  role?: string;
+  period?: string;
+  status?: string;
+  summary: string;
+  highlights?: string[];
+  /** Tools for products I built, skills for roles I held. */
+  stack?: string;
+  skills?: string;
+  links?: { label: string; href: string }[];
 };
 
-// Newest first within each group. Internal links ("/…") point to the blog.
-const current: Project[] = [
+// Internal links ("/…") point to posts and series on this blog.
+const buildingNow: Project[] = [
   {
     name: "Foambyte",
-    description:
-      "A production-management platform for craft brewers, co-founded with my brother Diego. I designed and built the platform: architecture, frontend, backend, mobile and infrastructure.",
-    stack: "React, Capacitor, Hono, Cloudflare Workers, PlanetScale Postgres",
+    role: "Co-founder & CEO, sole developer (co-founded with Diego Santiago de la Torre, brewmaster and CPO, who owns product direction)",
+    period: "2024 – present",
+    status: "Live",
+    summary:
+      "Brewing software for craft brewers and professional micro-breweries. Diego sets the product direction from the brewhouse; I design, build and run the software.",
+    highlights: [
+      "Shipped: Recipe Studio (Apr 2026), Batch Tracking (Sep 2026), Print View",
+      "In beta: Tank View (Oct 2026), IoT device integration, Inventory Management",
+      "In development: two LLM-powered features, an AI recipe builder and a batch QA advisor",
+      "Brewing chemistry calculations built into recipe design",
+      "Used by 100+ brewers in 3 countries",
+    ],
+    stack:
+      "React, TypeScript, Hono, Cloudflare Workers, Postgres (moving to PlanetScale), Vitest, Zod, OpenAPI, Claude Code",
     links: [
-      { label: "Site", href: "https://foambyte.com" },
+      { label: "foambyte.com", href: "https://foambyte.com" },
       { label: "Engineering series", href: "/foambyte/" },
     ],
   },
   {
     name: "levi",
-    description:
+    role: "Author",
+    period: "Oct 2026 – present",
+    status: "Open source",
+    summary:
       "A small, fast git diff viewer for the terminal: fuzzy search over commits and files, and a code search across the whole history.",
     stack: "Rust, ratatui, git",
     links: [
@@ -36,70 +56,70 @@ const current: Project[] = [
     ],
   },
   {
-    name: "baa",
-    description:
-      "A Herdr plugin that checks a project still compiles after each AI coding agent turn, and shows the result next to the agent in the sidebar.",
-    stack: "Rust, Herdr",
-    links: [{ label: "Code", href: "https://github.com/rsdlt/baa" }],
-  },
-  {
-    name: "bottleneck",
-    description:
-      "A Herdr plugin that measures how long AI coding agents sit waiting on you, so you can see where that time goes.",
-    stack: "Rust, Herdr",
-    links: [{ label: "Code", href: "https://github.com/rsdlt/bottleneck" }],
-  },
-  {
-    name: "rsdlt.dev",
-    description: "This blog.",
-    stack: "Astro, AstroPaper, GitHub Pages",
-    links: [
-      { label: "Code", href: "https://github.com/rsdlt/rsdlt.github.io" },
+    name: "Herdr plugins: bottleneck and baa",
+    role: "Author",
+    period: "Oct 2026",
+    status: "Open source",
+    summary:
+      "Two Rust plugins for Herdr, a terminal workspace manager for AI coding agents.",
+    highlights: [
+      "bottleneck measures how long agents sit waiting on the human (CI with clippy)",
+      "baa checks after each agent turn that the project still compiles (cargo check or tsc) and shows ✓/✗ in the Herdr sidebar",
     ],
+    stack: "Rust",
+    links: [
+      { label: "bottleneck", href: "https://github.com/rsdlt/bottleneck" },
+      { label: "baa", href: "https://github.com/rsdlt/baa" },
+      { label: "Herdr", href: "https://herdr.dev" },
+    ],
+  },
+  {
+    name: "GangaStyle",
+    role: "Investor; built the store",
+    status: "Live",
+    summary:
+      "Family apparel e-commerce store in Mexico. I built and set up the Shopify store.",
+    stack: "Shopify",
+    links: [{ label: "gangastyle.com", href: "https://gangastyle.com" }],
   },
 ];
 
-const past: Project[] = [
+const career: Project[] = [
   {
-    name: "WebAssembly Vigenère Cipher",
-    description:
-      "A real-time Vigenère cipher in the browser, written in Rust and compiled to WebAssembly.",
-    stack: "Rust, WebAssembly, Sycamore, Trunk",
-    links: [
-      { label: "Code", href: "https://github.com/rsdlt/wasm-vigenere-cipher" },
-      {
-        label: "Post",
-        href: "/posts/rust-sycamore-trunk-wasm-iterators-vigenere-cipher/",
-      },
+    name: "Digital banking across Latin America and the Caribbean (Fiserv)",
+    role: "Digital Channels Segment Lead → Director of Product Management",
+    period:
+      "2014 – 2021 (Mexico 2014–2018; Lake Mary, Florida 2019–2021)",
+    summary:
+      "Brought Fiserv's global digital banking solutions to Latin America and the Caribbean. Defined the regional requirements for product-market fit, led tailored implementations for 10 financial institutions in 6 markets, and owned the P&L and continuous improvement for those clients.",
+    highlights: [
+      "Implementations in Mexico, Curaçao, Suriname, Jamaica, Bermuda and the Cayman Islands",
+      "DigitalAccess for De Surinaamsche Bank (2017)",
+      "Multi-tenant DigitalAccess for SISCOOP, serving 26 Mexican credit unions (2018); Caja Popular Mexicana was the first credit union live",
+      "Presented and demoed the solutions to bank executives and IT teams across the region, and worked with them on their needs and roadmaps",
     ],
+    skills:
+      "Product management, digital banking, go-to-market, P&L ownership, client delivery",
   },
   {
-    name: "Ruxel",
-    description: "A ray tracer and renderer built from scratch.",
-    stack: "Rust",
-    links: [
-      { label: "Code", href: "https://github.com/rsdlt/ruxel" },
-      {
-        label: "Part 1",
-        href: "/posts/ruxel-part-1-rust-ray-tracer-renderer-3d-development/",
-      },
-      {
-        label: "Update",
-        href: "/posts/ruxel-ray-tracer-project-first-update-rust-programming-development/",
-      },
+    name: "3G and prepaid launches (Nextel México, now AT&T México)",
+    role: "Product management",
+    summary:
+      "Led the commercial launch of 3G voice and data services and of prepaid iDEN. Defined the go-to-market for 4G LTE (implementation came after I left).",
+    highlights: [
+      "Commercial launch of 3G voice and data",
+      "Commercial launch of prepaid iDEN",
+      "4G LTE go-to-market definition",
     ],
+    skills: "Product launches, go-to-market, telecom",
   },
+];
+
+const openSource: Project[] = [
   {
-    name: "Ray Tracer Mini",
-    description:
-      "A ray tracer following the Ray Tracing in One Weekend books, rendering in parallel across every core.",
-    stack: "Rust, Rayon",
-    links: [{ label: "Code", href: "https://github.com/rsdlt/ray-tracer-mini" }],
-  },
-  {
-    name: "Neovim config",
-    description: "My Neovim setup as a Rust IDE: LSP, debugging and more.",
-    stack: "Lua, Neovim",
+    name: "nvim-config-files",
+    summary:
+      "My Neovim setup for Rust development. 50+ stars, 15 forks; the companion guide was a top Google result for Rust + Neovim in 2022.",
     links: [
       { label: "Code", href: "https://github.com/rsdlt/nvim-config-files" },
       {
@@ -108,16 +128,44 @@ const past: Project[] = [
       },
     ],
   },
+  {
+    name: "The Trait (Rust blog)",
+    period: "2022",
+    summary: "My earlier blog about learning and writing Rust.",
+    links: [{ label: "Rust posts", href: "/tags/rust/" }],
+  },
+  {
+    name: "Axum contributions",
+    period: "2023",
+    summary: "Contributions to the Axum web framework.",
+  },
+  {
+    name: "Rust side projects",
+    summary:
+      "Smaller projects from studying Rust: a Vigenère cipher in WebAssembly and two ray tracers.",
+    links: [
+      {
+        label: "wasm-vigenere-cipher",
+        href: "https://github.com/rsdlt/wasm-vigenere-cipher",
+      },
+      { label: "ruxel", href: "https://github.com/rsdlt/ruxel" },
+      {
+        label: "ray-tracer-mini",
+        href: "https://github.com/rsdlt/ray-tracer-mini",
+      },
+    ],
+  },
 ];
 
 const groups = [
-  { heading: "Current", projects: current },
-  { heading: "Past", projects: past },
+  { heading: "Building now", projects: buildingNow },
+  { heading: "Career", projects: career },
+  { heading: "Open source and writing", projects: openSource },
 ];
 
 const title = "Projects";
 const description =
-  "What I'm building now and what I've built before, with links to the code and the posts about each one.";
+  "What I'm building now, the products I led before, and my open source work and writing.";
 ---
 
 <Layout title={`${title} | ${config.site.title}`} {description}>
@@ -131,33 +179,61 @@ const description =
         <section class="mt-10">
           <h2 class="text-xl font-semibold">{heading}</h2>
           <ul>
-            {projects.map(({ name, description, stack, links }) => (
-              <li class="my-6">
-                <h3 class="text-accent text-lg font-medium">{name}</h3>
-                <p>{description}</p>
-                <p class="text-muted-foreground mt-1 text-sm">{stack}</p>
-                <ul class="mt-1 flex flex-wrap gap-x-4 text-sm">
-                  {links.map(({ label, href }) => {
-                    const external = href.startsWith("http");
-                    return (
-                      <li>
-                        <a
-                          {href}
-                          class="hover:text-accent underline decoration-dashed underline-offset-4"
-                          aria-label={`${name}: ${label}`}
-                          {...(external && {
-                            target: "_blank",
-                            rel: "noopener",
-                          })}
-                        >
-                          {label}
-                        </a>
-                      </li>
-                    );
-                  })}
-                </ul>
-              </li>
-            ))}
+            {projects.map(project => {
+              const meta = [project.role, project.period, project.status]
+                .filter(Boolean)
+                .join(" · ");
+              return (
+                <li class="my-8">
+                  <h3 class="text-accent text-lg font-medium">
+                    {project.name}
+                  </h3>
+                  {meta && (
+                    <p class="text-muted-foreground text-sm">{meta}</p>
+                  )}
+                  <p class="mt-2">{project.summary}</p>
+                  {project.highlights && (
+                    <ul class="mt-2 list-disc ps-6">
+                      {project.highlights.map(item => (
+                        <li>{item}</li>
+                      ))}
+                    </ul>
+                  )}
+                  {project.stack && (
+                    <p class="text-muted-foreground mt-2 text-sm">
+                      Stack: {project.stack}
+                    </p>
+                  )}
+                  {project.skills && (
+                    <p class="text-muted-foreground mt-2 text-sm">
+                      Skills: {project.skills}
+                    </p>
+                  )}
+                  {project.links && (
+                    <ul class="mt-2 flex flex-wrap gap-x-4 text-sm">
+                      {project.links.map(({ label, href }) => {
+                        const external = href.startsWith("http");
+                        return (
+                          <li>
+                            <a
+                              {href}
+                              class="hover:text-accent underline decoration-dashed underline-offset-4"
+                              aria-label={`${project.name}: ${label}`}
+                              {...(external && {
+                                target: "_blank",
+                                rel: "noopener",
+                              })}
+                            >
+                              {label}
+                            </a>
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  )}
+                </li>
+              );
+            })}
           </ul>
         </section>
       ))
