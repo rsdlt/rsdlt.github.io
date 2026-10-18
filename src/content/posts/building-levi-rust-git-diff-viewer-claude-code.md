@@ -5,11 +5,11 @@ description: "Why I built levi, a terminal git diff viewer with fzf-style search
 tags: ["levi", "rust", "git", "tui", "cli", "claude code", "ai coding agents"]
 ---
 
-[levi](https://github.com/rsdlt/levi) is a git diff viewer for the terminal. It does one thing: browse the commits on your branch, the files each one touched, and their diffs, with fzf-style search on top. It went from an empty repository to release **0.12.0** between the night of October 15 and the afternoon of October 17. Every one of its 48 commits was written with **Claude Code**.
+[levi](https://github.com/rsdlt/levi) is a git diff viewer for the terminal. It does one thing: browse the commits on your branch, the files each one touched, and their diffs, with fzf-style search on top. It went from an empty repository to release **0.12.0** between the night of October 15 and the afternoon of October 17, and it's still growing. Every commit is written with **Claude Code**.
 
 ![levi browsing its own history: fuzzy search, a diff with changed words marked, a code search, and Enter handing the sha to git show](https://raw.githubusercontent.com/rsdlt/levi/main/docs/demo.gif)
 
-This post opens a series about how it was built. It covers what levi is, the decisions that shaped it, and how I worked with the agent. The posts after it follow the build session by session.
+This post opens an ongoing series about building it. It covers what levi is, the decisions that shaped it, and how I work with the agent. The posts after it follow the build session by session, and new posts will follow as levi grows.
 
 ## What levi does
 
@@ -68,8 +68,7 @@ I've written about [how I use Claude Code on a production SaaS](/posts/claude-co
 2. **Night one: from zero to 0.1.0 in 90 minutes.** The git layer, the three-pane TUI, background loading, fuzzy search on every core, and CI.
 3. **After midnight: chasing a 55-second code search down to 0.16 seconds.** The reflog, `/c`, loading history on every core, and narrowing the search to only the commits and files that matter.
 4. **Day two: the polish that makes a TUI usable.** Changed-word highlighting, mouse support, a layout for narrow terminals, `levi main..HEAD`, and shipping binaries for every platform.
-
-The series covers levi up to 0.12.0. If levi gets new features worth writing about, they'll be added here.
+5. **And more to come.** levi is still moving: 0.13.0 already added copying the selected commit's sha with `Ctrl-Y`, and copying text with a mouse drag. The series follows it as it grows, and the [series page](/levi/) lists every post.
 
 ## Try it
 
