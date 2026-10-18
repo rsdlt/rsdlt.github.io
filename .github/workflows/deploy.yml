@@ -3,6 +3,12 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches: [main]
+  # Daily rebuild so scheduled posts (future pubDatetime) go live. Cron is
+  # UTC; two runs keep 9:00 America/Chicago covered across daylight saving:
+  # 14:00 UTC is 9:00 CDT, 15:00 UTC is 9:00 CST.
+  schedule:
+    - cron: "0 14 * * *"
+    - cron: "0 15 * * *"
   workflow_dispatch:
 
 permissions:
