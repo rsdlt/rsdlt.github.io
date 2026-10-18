@@ -4,11 +4,11 @@ on:
   push:
     branches: [main]
   # Daily rebuild so scheduled posts (future pubDatetime) go live. Cron is
-  # UTC; two runs keep 9:00 America/Chicago covered across daylight saving:
-  # 14:00 UTC is 9:00 CDT, 15:00 UTC is 9:00 CST.
+  # UTC: 14:17, 15:17 and 16:17 UTC keep a run soon after 9:00
+  # America/Chicago in both CDT and CST. GitHub drops scheduled runs under
+  # load, most often on the hour, hence the odd minute and the spare runs.
   schedule:
-    - cron: "0 14 * * *"
-    - cron: "0 15 * * *"
+    - cron: "17 14-16 * * *"
   workflow_dispatch:
 
 permissions:
