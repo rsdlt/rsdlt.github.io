@@ -1,0 +1,168 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import Header from "@/components/Header.astro";
+import Breadcrumb from "@/components/Breadcrumb.astro";
+import Main from "@/components/Main.astro";
+import Footer from "@/components/Footer.astro";
+import config from "@/config";
+
+type Project = {
+  name: string;
+  description: string;
+  stack: string;
+  links: { label: string; href: string }[];
+};
+
+// Newest first within each group. Internal links ("/…") point to the blog.
+const current: Project[] = [
+  {
+    name: "Foambyte",
+    description:
+      "A production-management platform for craft brewers, co-founded with my brother Diego. I designed and built the platform: architecture, frontend, backend, mobile and infrastructure.",
+    stack: "React, Capacitor, Hono, Cloudflare Workers, PlanetScale Postgres",
+    links: [
+      { label: "Site", href: "https://foambyte.com" },
+      { label: "Engineering series", href: "/foambyte/" },
+    ],
+  },
+  {
+    name: "levi",
+    description:
+      "A small, fast git diff viewer for the terminal: fuzzy search over commits and files, and a code search across the whole history.",
+    stack: "Rust, ratatui, git",
+    links: [
+      { label: "Code", href: "https://github.com/rsdlt/levi" },
+      { label: "Building levi series", href: "/levi/" },
+    ],
+  },
+  {
+    name: "baa",
+    description:
+      "A Herdr plugin that checks a project still compiles after each AI coding agent turn, and shows the result next to the agent in the sidebar.",
+    stack: "Rust, Herdr",
+    links: [{ label: "Code", href: "https://github.com/rsdlt/baa" }],
+  },
+  {
+    name: "bottleneck",
+    description:
+      "A Herdr plugin that measures how long AI coding agents sit waiting on you, so you can see where that time goes.",
+    stack: "Rust, Herdr",
+    links: [{ label: "Code", href: "https://github.com/rsdlt/bottleneck" }],
+  },
+  {
+    name: "rsdlt.dev",
+    description: "This blog.",
+    stack: "Astro, AstroPaper, GitHub Pages",
+    links: [
+      { label: "Code", href: "https://github.com/rsdlt/rsdlt.github.io" },
+    ],
+  },
+];
+
+const past: Project[] = [
+  {
+    name: "WebAssembly Vigenère Cipher",
+    description:
+      "A real-time Vigenère cipher in the browser, written in Rust and compiled to WebAssembly.",
+    stack: "Rust, WebAssembly, Sycamore, Trunk",
+    links: [
+      { label: "Code", href: "https://github.com/rsdlt/wasm-vigenere-cipher" },
+      {
+        label: "Post",
+        href: "/posts/rust-sycamore-trunk-wasm-iterators-vigenere-cipher/",
+      },
+    ],
+  },
+  {
+    name: "Ruxel",
+    description: "A ray tracer and renderer built from scratch.",
+    stack: "Rust",
+    links: [
+      { label: "Code", href: "https://github.com/rsdlt/ruxel" },
+      {
+        label: "Part 1",
+        href: "/posts/ruxel-part-1-rust-ray-tracer-renderer-3d-development/",
+      },
+      {
+        label: "Update",
+        href: "/posts/ruxel-ray-tracer-project-first-update-rust-programming-development/",
+      },
+    ],
+  },
+  {
+    name: "Ray Tracer Mini",
+    description:
+      "A ray tracer following the Ray Tracing in One Weekend books, rendering in parallel across every core.",
+    stack: "Rust, Rayon",
+    links: [{ label: "Code", href: "https://github.com/rsdlt/ray-tracer-mini" }],
+  },
+  {
+    name: "Neovim config",
+    description: "My Neovim setup as a Rust IDE: LSP, debugging and more.",
+    stack: "Lua, Neovim",
+    links: [
+      { label: "Code", href: "https://github.com/rsdlt/nvim-config-files" },
+      {
+        label: "Guide",
+        href: "/posts/rust-nvim-ide-guide-walkthrough-development-debug/",
+      },
+    ],
+  },
+];
+
+const groups = [
+  { heading: "Current", projects: current },
+  { heading: "Past", projects: past },
+];
+
+const title = "Projects";
+const description =
+  "What I'm building now and what I've built before, with links to the code and the posts about each one.";
+---
+
+<Layout title={`${title} | ${config.site.title}`} {description}>
+  <Header />
+
+  <Breadcrumb />
+
+  <Main pageTitle={title} pageDesc={description}>
+    {
+      groups.map(({ heading, projects }) => (
+        <section class="mt-10">
+          <h2 class="text-xl font-semibold">{heading}</h2>
+          <ul>
+            {projects.map(({ name, description, stack, links }) => (
+              <li class="my-6">
+                <h3 class="text-accent text-lg font-medium">{name}</h3>
+                <p>{description}</p>
+                <p class="text-muted-foreground mt-1 text-sm">{stack}</p>
+                <ul class="mt-1 flex flex-wrap gap-x-4 text-sm">
+                  {links.map(({ label, href }) => {
+                    const external = href.startsWith("http");
+                    return (
+                      <li>
+                        <a
+                          {href}
+                          class="hover:text-accent underline decoration-dashed underline-offset-4"
+                          aria-label={`${name}: ${label}`}
+                          {...(external && {
+                            target: "_blank",
+                            rel: "noopener",
+                          })}
+                        >
+                          {label}
+                        </a>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </li>
+            ))}
+          </ul>
+        </section>
+      ))
+    }
+  </Main>
+
+  <Footer />
+</Layout>
