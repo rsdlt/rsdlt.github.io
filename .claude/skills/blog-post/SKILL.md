@@ -52,7 +52,7 @@ tags: ["levi", "rust", "git", "claude code"]
 
 Production builds hide posts whose `pubDatetime` is in the future (minus a 15-minute margin),
 everywhere: lists, tags, RSS, series pages, llms.txt, the post page and its OG image. The site
-rebuilds every day at 9:00 Central (`.github/workflows/deploy.yml`), and on every push.
+rebuilds every day at about 9:17 Central, with spare runs an hour and two hours later (`.github/workflows/deploy.yml`), and on every push.
 
 - **Scheduled posts go out at 9:00:** use `T09:00:00` with the right offset. Later times wait
   until the next day's run or the next push.
