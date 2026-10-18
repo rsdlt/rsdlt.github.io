@@ -14,7 +14,7 @@ const { noMarginTop = false, class: className, ...attrs } = Astro.props;
 const t = useTranslations(Astro.currentLocale);
 const currentYear = new Date().getFullYear();
 const locale = Astro.currentLocale ?? config.site.lang;
-const legalLinkClass =
+const footerLinkClass =
   "hover:text-accent underline decoration-dashed underline-offset-4";
 ---
 
@@ -31,12 +31,25 @@ const legalLinkClass =
       <span class="hidden sm:inline">&nbsp;|&nbsp;</span>
       <span>{t.footer.allRightsReserved}</span>
       <span class="hidden sm:inline">&nbsp;|&nbsp;</span>
-      <nav aria-label="Legal" class="mt-2 flex gap-4 sm:mt-0 sm:gap-0">
-        <a href={getRelativeLocaleUrl(locale, "terms")} class={legalLinkClass}
+      <nav aria-label="Footer" class="mt-2 flex gap-4 sm:mt-0 sm:gap-0">
+        {
+          config.features.showArchives && (
+            <>
+              <a
+                href={getRelativeLocaleUrl(locale, "archives")}
+                class={footerLinkClass}
+              >
+                {t.nav.archives}
+              </a>
+              <span class="hidden sm:inline">&nbsp;|&nbsp;</span>
+            </>
+          )
+        }
+        <a href={getRelativeLocaleUrl(locale, "terms")} class={footerLinkClass}
           >Terms</a
         >
         <span class="hidden sm:inline">&nbsp;|&nbsp;</span>
-        <a href={getRelativeLocaleUrl(locale, "privacy")} class={legalLinkClass}
+        <a href={getRelativeLocaleUrl(locale, "privacy")} class={footerLinkClass}
           >Privacy</a
         >
       </nav>
