@@ -26,6 +26,19 @@ import config from "./astro-paper.config";
 
 export default defineConfig({
   site: config.site.url,
+  // Pages from the old Jekyll (Chirpy) site at rsdlt.github.io that have no
+  // match here. GitHub Pages can't send 301s, so Astro writes instant
+  // meta-refresh pages with a canonical link, which Google treats as permanent.
+  redirects: {
+    "/about": "/projects/",
+    "/page2": "/posts/",
+    "/categories": "/tags/",
+    "/categories/rust": "/tags/rust/",
+    "/categories/ray-tracer": "/tags/ray-tracer/",
+    "/categories/neovim": "/tags/neovim/",
+    "/categories/traits": "/tags/traits/",
+    "/categories/wasm": "/tags/wasm/",
+  },
   integrations: [
     mdx(),
     sitemap({
